@@ -1,0 +1,23 @@
+{
+  "name": "daily-quest-tracker",
+  "version": "1.0.0",
+  "description": "Daily Quest Tracker is a MERN stack RPG-style productivity app that turns habit-building into a game. Users create personal quests (habits or goals), earn XP for completing them, level up, unlock badges, and join guilds with friends to share progress and stay motivated.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm --prefix client run build",
+    "dev": "npm --prefix server run dev",
+    "start": "npm --prefix server run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisnordrum/daily-quest-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chrisnordrum/daily-quest-tracker/issues"
+  },
+  "homepage": "https://github.com/chrisnordrum/daily-quest-tracker#readme"
+}
