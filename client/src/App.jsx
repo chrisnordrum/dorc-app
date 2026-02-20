@@ -1,7 +1,14 @@
+import { Routes, Route } from "react-router";
+import Home from "./pages/Home.jsx";
+import NotFound from "./pages/NotFound.jsx";
+
 function App() {
   return (
     <>
-      <h1>Hello World!</h1>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   )
 }
