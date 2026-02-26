@@ -19,7 +19,7 @@ export default function Home() {
   
   return (
     <main>
-      <h1 className="text-3xl font-bold text-center mt-10">Welcome to The Daily Quest Tracker</h1>
+      <h1 className="text-center mt-10">Welcome to The Daily Quest Tracker</h1>
 
       <h2 className="mt-5 text-center text-xl font-bold">We don't have a name yet!</h2>
       <p className="font-bold text-center mt-5">Created by:</p>
@@ -27,7 +27,7 @@ export default function Home() {
         <li>Chris Nordrum</li>
         <li>Owen Ouyang</li>
         <li>Radzil Bunag</li>
-        <li>Diane Scuhltze</li>
+        <li>Diane Schultze</li>
       </ul>
       {data ? <p className="text-center mt-5">{data.message}</p> : <p className="text-center mt-5">Loading...</p>}
     </main>
