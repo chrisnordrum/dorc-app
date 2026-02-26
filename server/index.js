@@ -33,7 +33,21 @@ app.get("/quests", (req, res) => {
 
 // GET a specific quest
 app.get("/quests/:id", (req, res) => {
-  res.send(`GET /quests/${req.params.id}`);
+  fs.readFile("./db.json", "utf8", (err, data) => {
+    if (err) {
+      res.status(500).json({ error: "Failed to read database" });
+      return;
+    }
+    const db = JSON.parse(data);
+    const quest = db.quests.find(
+      (quest) => quest.id === Number.parseInt(req.params.id),
+    );
+    if (!quest) {
+      res.status(404).json({ error: "Quest not found" });
+      return;
+    }
+    res.status(200).json(quest);
+  });
 });
 
 // POST a new quest
