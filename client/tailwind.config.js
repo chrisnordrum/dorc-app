@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "media", 
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "chosen-blue": "#00182E",
+        "arctic-ice": "#F4FBFF",
+        "dark-ocean": "#002548",
+        "full-white": "#FFFFFF",
+      },
+    },
   },
   plugins: [],
-}
-
+};
