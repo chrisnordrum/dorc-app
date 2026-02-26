@@ -1,6 +1,7 @@
 "use strict";
 const path = require("path");
 const express = require("express");
+const fs = require("fs");
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -20,7 +21,14 @@ app.get("/api/hello", (req, res) => {
 
 // GET all quests
 app.get("/quests", (req, res) => {
-  res.send("GET /quests");
+  fs.readFile("./db.json", "utf8", (err, data) => {
+    if (err) {
+      res.status(500).json({ error: "Failed to read database" });
+      return;
+    }
+    const db = JSON.parse(data);
+    res.status(200).json(db.quests);
+  });
 });
 
 // GET a specific quest

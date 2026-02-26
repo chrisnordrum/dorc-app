@@ -1,0 +1,47 @@
+{
+  "quests": [
+    {
+    "id": 1,
+    "title": "Study French",
+    "description": "Practice listening, speaking, reading, writing",
+    "xpReward": 30
+  },
+  {
+    "id": 2,
+    "title": "Exercise",
+    "description": "Go for a walk, run, or bike ride",
+    "xpReward": 20
+  },
+  {
+    "id": 3,
+    "title": "Read a book",
+    "description": "Read a book for 30 minutes",
+    "xpReward": 10
+  },
+  {
+    "id": 4,
+    "title": "Meditate",
+    "description": "Meditate for 10 minutes",
+    "xpReward": 5
+  },
+  {
+    "id": 5,
+    "title": "Practice coding",
+    "description": "Practice coding for 30 minutes",
+    "xpReward": 15
+  }
+],
+"users": [
+  {
+    "id": 1,
+    "name": "Nash",
+    "email": "nash@example.com",
+    "password": "password",
+    "level": 1,
+    "xp": 0,
+    "xpToNextLevel": 100,
+    "streak": 0,
+    "lastCompletedQuest": "2026-02-26T00:00:00.000Z"
+  }
+]
+}
