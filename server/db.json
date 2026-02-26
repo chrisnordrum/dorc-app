@@ -22,13 +22,13 @@
     "id": 4,
     "title": "Meditate",
     "description": "Meditate for 10 minutes",
-    "xpReward": 5
+    "xpReward": 10
   },
   {
     "id": 5,
     "title": "Practice coding",
     "description": "Practice coding for 30 minutes",
-    "xpReward": 15
+    "xpReward": 20
   }
 ],
 "users": [
