@@ -9,8 +9,6 @@ const app = express();
 const distPath = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(distPath));
 
-app.use(express.json());
-
 // API routes
 app.get("/api/hello", (req, res) => {
   res.json({
@@ -19,50 +17,47 @@ app.get("/api/hello", (req, res) => {
   });
 });
 
-// GET all quests
-app.get("/quests", (req, res) => {
-  fs.readFile("./db.json", "utf8", (err, data) => {
-    if (err) {
-      res.status(500).json({ error: "Failed to read database" });
-      return;
-    }
-    const db = JSON.parse(data);
-    res.status(200).json(db.quests);
-  });
-});
+//API  use routes
+
+const questRoutes = require("./routes/questRoutes");
+app.use("/api/quests", questRoutes);
 
 // GET a specific quest
-app.get("/quests/:id", (req, res) => {
+// app.get("/quests/:id", (req, res) => {
+//   fs.readFile("./db.json", "utf8", (err, data) => {
+//     if (err) {
+//       res.status(500).json({ error: "Failed to read database" });
+//       return;
+//     }
+//     const db = JSON.parse(data);
+//     const quest = db.quests.find(
+//       (quest) => quest.id === Number.parseInt(req.params.id),
+//     );
+//     if (!quest) {
+//       res.status(404).json({ error: "Quest not found" });
+//       return;
+//     }
+//     res.status(200).json(quest);
+//   });
+// });
+
+// GET a specific user
+app.get("/users/:id", (req, res) => {
   fs.readFile("./db.json", "utf8", (err, data) => {
     if (err) {
       res.status(500).json({ error: "Failed to read database" });
       return;
     }
     const db = JSON.parse(data);
-    const quest = db.quests.find(
-      (quest) => quest.id === Number.parseInt(req.params.id),
+    const user = db.users.find(
+      (user) => user.id === Number.parseInt(req.params.id),
     );
-    if (!quest) {
-      res.status(404).json({ error: "Quest not found" });
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
       return;
     }
-    res.status(200).json(quest);
+    res.status(200).json(user);
   });
-});
-
-// POST a new quest
-app.post("/quests", (req, res) => {
-  res.send("POST /quests");
-});
-
-// PATCH a specific quest
-app.patch("/quests/:id", (req, res) => {
-  res.send("patch /quests/${req.params.id}");
-});
-
-// DELETE a specific quest
-app.delete("/quests/:id", (req, res) => {
-  res.send("delete /quests/${req.params.id}");
 });
 
 // SPA fallback
