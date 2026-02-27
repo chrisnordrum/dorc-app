@@ -20,6 +20,8 @@ app.get("/api/hello", (req, res) => {
 });
 
 // API routes using the index.js file in the routes folder
+// (Users, Quests, Ranks, Badges, Daily Quotes)
+// MVC pattern
 const routes = require("./routes");
 app.use("/api", routes);
 
