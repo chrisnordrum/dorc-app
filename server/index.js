@@ -2,8 +2,8 @@
 const path = require("path");
 const express = require("express");
 const fs = require("fs");
-const https = require('https');
-const hsts = require('hsts');
+const https = require("https");
+const hsts = require("hsts");
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -19,20 +19,9 @@ app.get("/api/hello", (req, res) => {
   });
 });
 
-const questRoutes = require("./routes/questsRoutes");
-app.use("/api/quests", questRoutes);
-
-const userRoutes = require("./routes/usersRoutes");
-app.use("/api/users", userRoutes);
-
-const ranksRoutes = require("./routes/ranksRoutes");
-app.use("/api/ranks", ranksRoutes);
-
-const badgesRoutes = require("./routes/badgesRoutes");
-app.use("/api/badges", badgesRoutes);
-
-const dailyQuotesRoutes = require("./routes/dailyQuotesRoutes");
-app.use("/api/dailyquotes", dailyQuotesRoutes);
+// API routes using the index.js file in the routes folder
+const routes = require("./routes");
+app.use("/api", routes);
 
 // SPA fallback
 app.get("/*splat", (req, res) => {
@@ -47,26 +36,26 @@ app.use((err, req, res, next) => {
 
 // Apply HSTS middleware to the HTTPS server
 const hstsOptions = {
-    maxAge: 31536000, // 1 year in seconds
-    includeSubDomains: true, // Apply HSTS to all subdomains
-    preload: true // Include this site in the HSTS preload list
+  maxAge: 31536000, // 1 year in seconds
+  includeSubDomains: true, // Apply HSTS to all subdomains
+  preload: true, // Include this site in the HSTS preload list
 };
 
 // Create HTTPS server with SSL certificate
 const options = {
-    key: fs.readFileSync('private-key.pem'), // Path to your private key
-    cert: fs.readFileSync('certificate.pem'), // Path to your certificate
+  key: fs.readFileSync("private-key.pem"), // Path to your private key
+  cert: fs.readFileSync("certificate.pem"), // Path to your certificate
 };
 
 // Create HTTPS server
 const httpsServer = https.createServer(options, (req, res) => {
-    // Apply HSTS middleware
-    hsts(hstsOptions)(req, res, () => {
-        app(req, res);
-    });
+  // Apply HSTS middleware
+  hsts(hstsOptions)(req, res, () => {
+    app(req, res);
+  });
 });
 
 // start the Express server
 httpsServer.listen(PORT, () => {
-    console.log(`HTTPS Server running at https://localhost:${PORT}`);
+  console.log(`HTTPS Server running at https://localhost:${PORT}`);
 });
