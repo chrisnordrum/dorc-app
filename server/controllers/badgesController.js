@@ -6,6 +6,10 @@ const { getData } = require("../models/db");
  * 
  * Handles GET requests to fetch all badges from the database.
  *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {JSON} - Array of badges on success, or an error message on failure
+ */
 const getBadges = async (req, res) => {
   try {
     const data = await getData();
