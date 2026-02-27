@@ -1,25 +1,10 @@
-import { useState, useEffect } from "react";
-import QuestCard from "../components/QuestCard";
+import QuestGrid from "../components/QuestGrid";
 
 const Quest = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/quests")
-      .then((res) => res.json())
-      .then((result) => setData(result))
-      .catch((err) => console.error("Error fetching quests:", err));
-  }, []);
-
   return (
-    <main className="p-6">
+    <main>
       <h1>All Quests</h1>
-
-      <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-6 mt-4">
-        {data.map((quest) => (
-          <QuestCard key={quest.id} quest={quest} />
-        ))}
-      </div>
+      <QuestGrid />
     </main>
   );
 };
