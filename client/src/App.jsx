@@ -15,7 +15,6 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      
     </>
   )
 }

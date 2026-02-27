@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "../components/Nav.jsx";
 
 function Guild() {
     return (
