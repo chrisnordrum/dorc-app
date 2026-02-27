@@ -10,7 +10,14 @@ const app = express();
 
 // Security headers
 const helmet = require("helmet");
-app.use(helmet()); // Sets 13 default HTTP response headers
+app.use(
+  helmet({
+    // Sets default HTTP response headers from Helmet middleware
+    //
+    // HTTP response header configurations:
+    xFrameOptions: { action: "deny" }, // The document cannot be loaded in any frame => to avoid clickjacking attacks
+  }),
+);
 
 const distPath = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(distPath));
