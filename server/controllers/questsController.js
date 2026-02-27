@@ -12,6 +12,9 @@ const { getData } = require("../models/db");
  */
 const getQuests = async (req, res) => {
   try {
+    // Reasons for not caching this response:
+    // The quests are dynamic and change based on the user's progress.
+    res.set("Cache-Control", "no-store");
     const data = await getData();
     res.status(200).json(data.quests);
   } catch (error) {
