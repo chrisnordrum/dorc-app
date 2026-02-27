@@ -1,6 +1,11 @@
 "use strict";
 const { getData } = require("../models/db");
 
+/**
+ * Controller: Get all badges
+ * 
+ * Handles GET requests to fetch all badges from the database.
+ *
 const getBadges = async (req, res) => {
   try {
     const data = await getData();
