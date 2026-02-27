@@ -17,60 +17,20 @@ app.get("/api/hello", (req, res) => {
   });
 });
 
-//API  use routes
-
-const questRoutes = require("./routes/questRoutes");
+const questRoutes = require("./routes/questsRoutes");
 app.use("/api/quests", questRoutes);
 
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./routes/usersRoutes");
 app.use("/api/users", userRoutes);
 
-const rankRoutes = require("./routes/rankRoutes");
-app.use("/api/rank", rankRoutes);
+const ranksRoutes = require("./routes/ranksRoutes");
+app.use("/api/ranks", ranksRoutes);
 
 const badgesRoutes = require("./routes/badgesRoutes");
 app.use("/api/badges", badgesRoutes);
 
-const dailyQuoteRoutes = require("./routes/dailyQuoteRoutes");
-app.use("/api/dailyquotes", dailyQuoteRoutes);
-
-// GET a specific quest
-// app.get("/quests/:id", (req, res) => {
-//   fs.readFile("./db.json", "utf8", (err, data) => {
-//     if (err) {
-//       res.status(500).json({ error: "Failed to read database" });
-//       return;
-//     }
-//     const db = JSON.parse(data);
-//     const quest = db.quests.find(
-//       (quest) => quest.id === Number.parseInt(req.params.id),
-//     );
-//     if (!quest) {
-//       res.status(404).json({ error: "Quest not found" });
-//       return;
-//     }
-//     res.status(200).json(quest);
-//   });
-// });
-
-// GET a specific user
-// app.get("/users/:id", (req, res) => {
-//   fs.readFile("./db.json", "utf8", (err, data) => {
-//     if (err) {
-//       res.status(500).json({ error: "Failed to read database" });
-//       return;
-//     }
-//     const db = JSON.parse(data);
-//     const user = db.users.find(
-//       (user) => user.id === Number.parseInt(req.params.id),
-//     );
-//     if (!user) {
-//       res.status(404).json({ error: "User not found" });
-//       return;
-//     }
-//     res.status(200).json(user);
-//   });
-// });
+const dailyQuotesRoutes = require("./routes/dailyQuotesRoutes");
+app.use("/api/dailyquotes", dailyQuotesRoutes);
 
 // SPA fallback
 app.get("/*splat", (req, res) => {

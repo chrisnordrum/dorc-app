@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getBadges } = require("../controllers/badges");
+const { getBadges } = require("../controllers/badgesController");
 
 router.get("/", getBadges);
 

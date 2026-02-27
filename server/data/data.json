@@ -128,10 +128,13 @@
       }
     }
   ],
-  "dailyQuote": {
-  "quote": "Do something today that your future self will thank you for.",
-  "author": "Sean Patrick Flanery"
-},"rank": [
+  "dailyQuotes":
+    [{"id": 1,
+      "quote": "Do something today that your future self will thank you for.",
+      "author": "Sean Patrick Flanery"
+    }
+  ],
+"ranks": [
   {
     "userId": 1,
     "name": "Nash",
