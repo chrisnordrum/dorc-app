@@ -8,6 +8,10 @@ const hsts = require("hsts");
 const PORT = process.env.PORT || 5050;
 const app = express();
 
+// Security headers
+const helmet = require("helmet");
+app.use(helmet()); // Sets 13 default HTTP response headers
+
 const distPath = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(distPath));
 
