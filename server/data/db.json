@@ -4,31 +4,36 @@
       "id": 1,
       "title": "Study French",
       "description": "Practice listening, speaking, reading, writing",
-      "xpReward": 30
+      "xpReward": 30,
+      "completed": false
     },
     {
       "id": 2,
       "title": "Exercise",
       "description": "Go for a walk, run, or bike ride",
-      "xpReward": 20
+      "xpReward": 20,
+      "completed": true
     },
     {
       "id": 3,
       "title": "Read a book",
       "description": "Read a book for 30 minutes",
-      "xpReward": 10
+      "xpReward": 10,
+      "completed": false
     },
     {
       "id": 4,
       "title": "Meditate",
       "description": "Meditate for 10 minutes",
-      "xpReward": 10
+      "xpReward": 10,
+      "completed": true
     },
     {
       "id": 5,
       "title": "Practice coding",
       "description": "Practice coding for 30 minutes",
-      "xpReward": 20
+      "xpReward": 20,
+      "completed": true
     }
   ],
   "users": 

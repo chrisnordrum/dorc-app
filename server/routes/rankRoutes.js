@@ -3,8 +3,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { getQuests } = require("../controllers/quests");
+const { getRank } = require("../controllers/rank");
 
-router.get("/", getQuests);
+router.get("/", getRank);
 
 module.exports = router;

@@ -3,8 +3,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { getQuests } = require("../controllers/quests");
+const { getUser } = require("../controllers/user");
 
-router.get("/", getQuests);
+router.get("/", getUser);
 
 module.exports = router;
