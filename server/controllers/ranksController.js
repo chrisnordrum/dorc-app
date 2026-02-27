@@ -1,6 +1,15 @@
 "use strict";
 const { getData } = require("../models/db");
 
+/**
+ * Controller: Get all ranks
+ *
+ * Handles GET requests to fetch all ranks from the database.
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {JSON} - Array of ranks on success, or an error message on failure
+ */
 const getRanks = async (req, res) => {
   try {
     const data = await getData();
