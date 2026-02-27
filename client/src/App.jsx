@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.jsx";
 import Nav from "./components/Nav.jsx";
 import Guild from "./pages/Guild";
 import Leaderboard from "./pages/Leaderboard";
+import Quest from "./pages/Quest.jsx";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Nav />
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/quests" element={<Quest />} />
         <Route path="/guild" element={<Guild />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<NotFound />} />

@@ -35,4 +35,5 @@ h1 {
     font-size: clamp(2.5rem, 5vw, 4rem);
     text-transform: uppercase;
     line-height: 1;
+    text-align: center;
 }

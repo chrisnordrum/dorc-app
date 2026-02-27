@@ -13,9 +13,11 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-6 md:flex">
+          <li><Link className="hover:text-blue-300" to="/quests">Quests</Link></li>
           <li><Link className="hover:text-blue-300" to="/guild">Guild</Link></li>
           <li><Link className="hover:text-blue-300" to="/leaderboard">Leaderboard</Link></li>
           <li><Link className="hover:text-blue-300" to="/profile">Profile</Link></li>
+          
         </ul>
 
         <button

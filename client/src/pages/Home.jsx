@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Quest from "../components/Quest";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -20,8 +19,8 @@ export default function Home() {
   
   return (
     <main>
-      <h1>Home</h1>
-      <Quest />
+      <h1 className="text-center mt-10 text-purple-400">Home</h1>
+      {data && <p className="text-center mt-5">{data.message}</p>}
     </main>
   );
 }
