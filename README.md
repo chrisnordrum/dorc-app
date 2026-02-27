@@ -1,4 +1,5 @@
 # daily-quest-tracker
+
 Daily Quest Tracker is a MERN stack RPG-style productivity app that turns habit-building into a game. Users create personal quests (habits or goals), earn XP for completing them, level up, unlock badges, and join guilds with friends to share progress and stay motivated.
 
 
@@ -28,6 +29,7 @@ cp config.env.example config.env
 ```
 
 ### Development
+
 1. Go to the project directory within the terminal to start the server
 ```
 npm run dev
@@ -43,9 +45,15 @@ npm run dev
 
 
 ## SSL Configuration
-Which SSL setup method did you choose and why? Document your decision-making process in a short paragraph, highlighting any past experiences or expectations about each method.
+
+### SSL Certificate
 
 We opted for a self-signed OpenSSL certificate as it was the easiest method at the time, and fit well into the in-class activities we had already done. We had also opted for this one as we were still in early local development phase, and didn't yet have a final build to properly secure. We didn't yet have experience with CertBot and Let's Encrypt just yet, but we will be looking into implementing those in future builds.
+
+### Security Headers
+
+We used the [Helmet](https://helmetjs.github.io/) middleware to set HTTP response headers for the app. // Need to go more in depth
+
 
 ## Lessons Learned
 
