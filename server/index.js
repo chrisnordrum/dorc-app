@@ -28,9 +28,6 @@ app.use(
   }),
 );
 
-const distPath = path.join(__dirname, "..", "client", "dist");
-app.use(express.static(distPath));
-
 // Serve badges statically with caching headers for 1 month.
 app.use(
   "/badges",
@@ -49,6 +46,10 @@ app.use(
 const routes = require("./routes");
 app.use("/api", routes);
 
+// Serve Vite build
+const distPath = path.join(__dirname, "..", "client", "dist");
+app.use(express.static(distPath));
+
 // SPA fallback
 app.get("/*splat", (req, res) => {
   res.sendFile(path.join(distPath, "index.html"));
@@ -59,7 +60,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Internal Server Error" });
 });
-
 
 // HTTPS Credentials
 const options = {
