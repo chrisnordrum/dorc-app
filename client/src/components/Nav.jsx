@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-chosen-blue text-full-white">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-10 py-5">
+      <nav className="mx-auto flex items-center justify-between px-10 py-5">
         <Link to="/">
           <img src="/dorc-typeface.png" alt="Dorc Logo" width={120} height={50} className="hover:opacity-70"/>
         </Link>

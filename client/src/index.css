@@ -30,6 +30,15 @@ body {
     color: rgb(var(--lightmode-txt));
 }
 
+main, nav {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+main {
+    padding: 2rem;
+}
+
 h1 {
     font-family: 'Geologica', sans-serif;
     font-size: clamp(2.5rem, 5vw, 4rem);
@@ -37,3 +46,4 @@ h1 {
     line-height: 1;
     text-align: center;
 }
+
