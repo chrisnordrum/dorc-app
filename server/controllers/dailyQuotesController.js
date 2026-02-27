@@ -15,8 +15,7 @@ const getDailyQuotes = async (req, res) => {
     const data = await getData();
 
     // Reasons for not caching this response:
-    // 1. The content is updated daily, so we need to ensure the client always gets the latest quote.
-    // 2. Allows immediate updates if any inappropriate content needs to be changed or removed.
+    // Allows immediate updates if any inappropriate content needs to be changed or removed.
     res.setHeader("Cache-Control", "no-store");
     res.status(200).json(data.dailyQuotes);
   } catch (error) {
