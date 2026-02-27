@@ -13,7 +13,6 @@ const { getData } = require("../models/db");
 const getDailyQuotes = async (req, res) => {
   try {
     const data = await getData();
-
     // Reasons for not caching this response:
     // Allows immediate updates if any inappropriate content needs to be changed or removed.
     res.setHeader("Cache-Control", "no-store");

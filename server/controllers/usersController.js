@@ -14,7 +14,6 @@ const getUsers = async (req, res) => {
   try {
     //Reasons for not caching this response:
     // The content of users is sensitive and should not be cached.
-
     res.set("Cache-Control", "no-store");
     const data = await getData();
     res.status(200).json(data.users);
