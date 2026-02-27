@@ -11,6 +11,18 @@ const app = express();
 const distPath = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(distPath));
 
+// Serve badges statically with caching headers for 1 month.
+app.use(
+  "/badges",
+  express.static(path.join(__dirname, "public", "badges"), {
+    setHeaders: (res, path) => {
+      if (path.endsWith(".png")) {
+        res.set("Cache-Control", "max-age=2592000");
+      }
+    },
+  }),
+);
+
 // API routes
 app.get("/api/hello", (req, res) => {
   res.json({
