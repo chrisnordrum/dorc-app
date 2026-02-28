@@ -2,7 +2,7 @@
 
 DORC is a MERN stack RPG-style productivity app that turns habit-building into a game. Users create personal quests (habits or goals), earn XP for completing them, level up, unlock badges, and join guilds with friends to share progress and stay motivated.
 
-
+---
 ## Setup Instructions
 
 ### Prerequisites
@@ -78,4 +78,9 @@ For temporary server errors, the <code>no-cache</code> caching policy is set to 
 
 ## Lessons Learned
 
-Perhaps the hardest part about implementing HTTPS into the site was configuring it to be compatible with it in the first place. The server's VITE system required reconfiguring to properly feed the right files from the server.
+- **Implementing HTTPS** - Perhaps the hardest part about implementing HTTPS into the site was configuring it to be compatible with it in the first place. The server's VITE system required reconfiguring to properly feed the right files from the server.
+
+- **Fetch API Data** 
+    - When fetching data from an API, never assume that the request will succeed. The server can always return an error status (e.g., 404 or 500). So ensure that the app handles error gracefully.
+    - Using ``UseEffect`` runs API requests when the component first loads. The UI renders before the data is returned, so setting a safe initial state (an empty array) is important to prevent errors when hnadling asynchronous data.
+    - Adding loading states helped improve UX by giving feedback while data is being fetched.
