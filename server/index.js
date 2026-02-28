@@ -16,6 +16,7 @@ app.use(
     // HTTP response header configurations:
     contentSecurityPolicy: {
       directives: {
+        fontSrc: ["'self'"], // Only load fonts from self
         frameAncestors: ["'none'"], // The document cannot be loaded in any frame => to avoid clickjacking attacks
       },
     },
