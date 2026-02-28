@@ -84,37 +84,32 @@ Caching headers are defined in the controllers so that cache behaviour can be ta
 1. questsController: Get all quests
    Handles GET requests to fetch all quests from the database.
 
-Reasons for not caching this response:
-
-- The quests are dynamic and change based on the user's progress.
+- Reasons for not caching this response:
+  The quests are dynamic and change based on the user's progress.
 
 2. ranksController: Get all ranks
    Handles GET requests to fetch all ranks from the database.
 
-Reasons for not caching this response:
-
-- The ranks are dynamic and change based on the user's progress.
+- Reasons for not caching this response:
+  The ranks are dynamic and change based on the user's progress.
 
 3. usersController: Get all users
    Handles GET requests to fetch all users from the database.
 
-Reasons for not caching this response:
-
-- The content of users is sensitive and should not be cached.
+- Reasons for not caching this response:
+  The content of users is sensitive and should not be cached.
 
 4. badgesController: Get all badges
    Handles GET requests to fetch all badges from the database.
 
-Reasons for caching the response for 1 month:
-
-- The content is static and does not change frequently.
+- Reasons for caching the response for 1 month:
+  The content is static and does not change frequently.
 
 5. Controller: Get daily quotes
    Handles GET requests to fetch daily quotes from the database.
 
-Reasons for not caching this response:
-
-- Allows immediate updates if any inappropriate content needs to be changed or removed.
+- Reasons for not caching this response:
+  Allows immediate updates if any inappropriate content needs to be changed or removed.
 
 ### SPA Fallback
 
