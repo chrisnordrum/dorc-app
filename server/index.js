@@ -53,12 +53,14 @@ app.use(express.static(distPath));
 
 // SPA fallback
 app.get("/*splat", (req, res) => {
+  res.set("Cache-Control", "no-store"); // The application shell should not be cached to ensure users always receive the latest build
   res.sendFile(path.join(distPath, "index.html"));
 });
 
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  res.set("Cache-Control", "no-store"); // Temporary server errors should not be cached
   res.status(500).json({ error: "Internal Server Error" });
 });
 

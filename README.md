@@ -55,6 +55,27 @@ We opted for a self-signed OpenSSL certificate as it was the easiest method at t
 We used the [Helmet](https://helmetjs.github.io/) middleware to set HTTP response headers for the app. // Need to go more in depth
 
 
+## Caching Strategies
+
+### Static Assets
+
+### API Routes
+
+### SPA Fallback
+
+This route ensures any client-side route is handled by the client. The SPA Fallback replaces the server-side 404 error by serving the application shell. 
+
+The caching policy chosen for this route is <code>no-cache</code> to ensure the user is always served the latest build.
+
+### Vite and React Build
+
+All client-side routing is handled by [React Router](https://reactrouter.com/) including 404 errors. Caching for client-side routes are handled efficiently by [React](https://react.dev/).
+
+### 500 Error
+
+For temporary server errors, the <code>no-cache</code> caching policy is set to ensure temporary server errors are not stored and cannot be potentially exploited.
+
+
 ## Lessons Learned
 
 Perhaps the hardest part about implementing HTTPS into the site was configuring it to be compatible with it in the first place. The server's VITE system required reconfiguring to properly feed the right files from the server.
