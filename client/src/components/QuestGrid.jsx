@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import QuestCard from "../components/QuestCard";
 
-export default function Quest({ limit }) {
+export default function QuestGrid({ limit }) {
   const [quests, setQuests] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
