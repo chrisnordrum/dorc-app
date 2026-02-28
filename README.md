@@ -52,7 +52,13 @@ We opted for a self-signed OpenSSL certificate as it was the easiest method at t
 
 ### Security Headers
 
-We used the [Helmet](https://helmetjs.github.io/) middleware to set HTTP response headers for the app. // Need to go more in depth
+We used the [Helmet](https://helmetjs.github.io/) middleware to set HTTP response headers for the app. 
+
+- We set the <code>frame-ancestors</code> within the Content Security Policy header to <code>'none'</code> and legacy X-Frame-Options header to <code>{ action: "deny" }</code> to reject all frame embedding since we won't be using frames within our app.
+- We set the <code>font-src</code> within the Content Security Policy header to <code>'self'</code> to reject all external fonts because we have fonts saved in our client directory and do not need to import any external fonts.
+- The rest of the headers are set by default by the [Helmet](https://helmetjs.github.io/) middleware and are standard in securing web applications and also align with our project.
+
+The next step for security headers is to incorporate nonces for script and style sources to only allow the user to load intended resources.
 
 
 ## Caching Strategies
