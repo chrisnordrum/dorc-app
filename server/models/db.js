@@ -29,7 +29,7 @@ const getData = async () => {
 const saveData = async (db) => {
   try {
     //convert the JSON object to a string
-    const data = JSON.stringify(db);
+    const data = JSON.stringify(db, null, "  ");
     //write the data to the data.json file
     await fs.writeFile(dbPath, data);
   } catch (error) {
