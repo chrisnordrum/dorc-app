@@ -6,6 +6,7 @@ import Guild from "./pages/Guild";
 import Leaderboard from "./pages/Leaderboard";
 import Quest from "./pages/Quest.jsx";
 import { useEffect } from "react";
+import Profile from "./pages/Profile.jsx";
 
 function App() {
   useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/quest" element={<Quest />} />
         <Route path="/guild" element={<Guild />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
