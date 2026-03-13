@@ -1,8 +1,41 @@
+import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+
 export default function Register() {
+  const { register } = useAuth();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSuccess(false);
+    setError(null);
+
+    try {
+      setLoading(true);
+      await register(username, password);
+      if (error) {
+        throw new Error("Error creating user");
+      }
+      setSuccess(true);
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      //setError(error.message);
+      console.error(error.message);
+      setError("Registration is not connected yet");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-bg min-h-screen flex items-start justify-center px-4 pt-10 pb-10 mb-8">
       <div className="bg-card w-full max-w-6xl border border-border rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row">
-        
         <div className="relative w-full md:w-1/2 min-h-[260px] md:min-h-[650px]">
           <img
             src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80"
@@ -14,14 +47,15 @@ export default function Register() {
               Ready to be a DORC?
             </h2>
             <p className="text-sm md:text-base text-white/90 max-w-sm">
-              Join our community today and create your account in just a few steps.
+              Join our community today and create your account in just a few
+              steps.
             </p>
           </div>
         </div>
 
         <div className="w-full md:w-1/2 flex items-center">
           <div className="w-full max-w-md mx-auto px-6 py-8 sm:px-8 md:px-6">
-            <form className="flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div className="mb-2">
                 <h1 className="text-fg text-left text-3xl font-bold">
                   Create Your Account
@@ -38,7 +72,7 @@ export default function Register() {
                   placeholder="First Name"
                   className="p-3 rounded-full bg-bg border border-border text-fg w-full outline-none focus:ring-2 focus:ring-accent/30"
                 />
-                
+
                 <label className="sr-only">Last Name</label>
                 <input
                   type="text"
@@ -46,8 +80,11 @@ export default function Register() {
                   className="p-3 rounded-full bg-bg border border-border text-fg w-full outline-none focus:ring-2 focus:ring-accent/30"
                 />
               </div>
-                
+
               <input
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 type="text"
                 placeholder="Username"
                 className="p-3 rounded-full bg-bg border border-border text-fg outline-none focus:ring-2 focus:ring-primary/30"
@@ -60,16 +97,33 @@ export default function Register() {
               />
 
               <input
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Password"
                 className="p-3 rounded-full bg-bg border border-border text-fg outline-none focus:ring-2 focus:ring-primary/30"
               />
 
+              {/* Quick error shown for now */}
+              {error && (
+                <div className="text-sm text-red-500 bg-red-500/10 p-3 rounded-xl">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="text-sm text-green-600 bg-green-500/10 p-3 rounded-xl">
+                  Account created successfully
+                </div>
+              )}
+
               <button
+                disabled={loading}
                 type="submit"
                 className="bg-accent text-white p-3 px-7 rounded-full font-medium hover:opacity-90 transition mt-2"
               >
-                Register
+                {loading ? "Creating Account..." : "Register"}
               </button>
 
               <p className="text-sm text-center text-fg/70 mt-2">
