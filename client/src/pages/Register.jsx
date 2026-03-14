@@ -1,33 +1,41 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Register() {
-  const { register } = useAuth();
-
+  // Form input states
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // Form status states
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { register } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setSuccess(false);
     setError(null);
 
     try {
       setLoading(true);
+
+      // Pass the form data to the register function
       await register(username, password);
-      if (error) {
-        throw new Error("Error creating user");
-      }
+
       setSuccess(true);
-      setUsername("");
-      setPassword("");
+
+      // Redirect to Quest page
+      navigate("/quest");
     } catch (error) {
       //setError(error.message);
-      console.error(error.message);
-      setError("Registration is not connected yet");
+      console.error(error.message); // remove this later
+      setError("Registration is not connected yet"); // just for now
     } finally {
       setLoading(false);
     }
@@ -105,26 +113,24 @@ export default function Register() {
                 className="p-3 rounded-full bg-bg border border-border text-fg outline-none focus:ring-2 focus:ring-primary/30"
               />
 
-              {/* Quick error shown for now */}
-              {error && (
-                <div className="text-sm text-red-500 bg-red-500/10 p-3 rounded-xl">
-                  {error}
-                </div>
-              )}
-
-              {success && (
-                <div className="text-sm text-green-600 bg-green-500/10 p-3 rounded-xl">
-                  Account created successfully
-                </div>
-              )}
-
               <button
                 disabled={loading}
                 type="submit"
-                className="bg-accent text-white p-3 px-7 rounded-full font-medium hover:opacity-90 transition mt-2"
+                className="bg-accent text-white p-3 px-7 rounded-full font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition mt-2"
               >
                 {loading ? "Creating Account..." : "Register"}
               </button>
+
+              {success && (
+                <span className="text-sm text-center text-green-600">
+                  Account created successfully
+                </span>
+              )}
+              {error && (
+                <span className="text-sm text-center text-red-500">
+                  {error}
+                </span>
+              )}
 
               <p className="text-sm text-center text-fg/70 mt-2">
                 Already have an account?{" "}
