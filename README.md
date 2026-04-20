@@ -31,6 +31,11 @@ DORC is a MERN stack RPG-style productivity app that turns habit-building into a
 - [Encryption Techniques](#encryption-techniques)
 - [Third-Party Libraries Dependency Management](#third-party-libraries-dependency-management)
 - [Security Testing](#security-testing)
+- [Vulnerability Fixes](#vulnerability-fixes)
+- [Testing Tools](#testing-tools)
+- [Ethical Responsibilities of Security Professionals](#ethical-responsibilities-of-security-professionals)
+- [Legal Implications of Security Testing](#legal-implications-of-security-testing)
+- [AI Tools](#ai-tools)
 - [Lessons Learned](#lessons-learned)
   - [Phase 1](#phase-1-establishing-a-secure-https-server)
   - [Phase 2](#phase-2-authentication-and-authorization-mechanisms)
@@ -130,6 +135,24 @@ npm run dev
 ```
 
 3. Open [http://localhost:5173](http://localhost:5173) in your browser during development (changes to React files appear instantly due to Hot Module Replacement (HMR))
+
+### Production
+
+1. Go to the project directory within the terminal to start the server
+
+```bash
+npm run dev
+```
+
+2. Open another terminal window, go to the `client` directory to build the client
+
+```bash
+npm run build
+```
+
+3. Open [https://localhost:5050](https://localhost:5050) in your browser during production
+
+> Production will pass HTTPS and security headers to the client build
 
 ---
 
@@ -607,7 +630,9 @@ Two related vulnerabilities were identified in the application’s **Content Sec
 
 ### Summary
 
-## By tightening the `style-src` directive and removing `'unsafe-inline'`, the CSP was made significantly more restrictive. These changes improved the application’s resistance to injection attacks while maintaining expected functionality.
+By tightening the `style-src` directive and removing `'unsafe-inline'`, the CSP was made significantly more restrictive. These changes improved the application’s resistance to injection attacks while maintaining expected functionality.
+
+---
 
 ## Testing Tools
 
@@ -620,7 +645,9 @@ Two related vulnerabilities were identified in the application’s **Content Sec
 | Helmet                       | Security Headers                         | Middleware to configure HTTP security headers                                    | Protected against common attacks like clickjacking and improved overall browser-side security                                       |
 | npm audit / GitHub Actions   | Dependency Scanning                      | Automated tools to detect vulnerabilities in third-party packages                | Identified outdated or vulnerable dependencies and supported regular security maintenance                                           |
 
-### Ethical Responsibilities of Security Professionals
+---
+
+## Ethical Responsibilities of Security Professionals
 
 During this project, we made sure our security testing stayed within ethical boundaries. Our main testing tool was OWASP ZAP, which we used to scan for common web vulnerabilities such as weak security headers, insecure configurations, and possible input validation issues. All testing was performed only on our own application and within our own development environment.
 
@@ -632,7 +659,9 @@ We also used Docker to simulate a more realistic deployment environment. This ga
 
 When weaknesses were identified through ZAP, our goal was to understand them and improve the application rather than misuse them. For example, we reviewed token storage, validation logic, security headers, and access control decisions to strengthen the overall security of the project.
 
-### Legal Implications of Security Testing
+---
+
+## Legal Implications of Security Testing
 
 Security testing also comes with legal responsibilities. Running vulnerability scans or attempting security tests on a system without permission can violate laws, policies, or terms of service, especially if it impacts data, users, or system availability. Because of this, all ZAP scans and related testing for this project were limited to our own application and approved project environment.
 
