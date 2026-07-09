@@ -87,15 +87,22 @@ app.use(passport.session());
 
 app.use("/auth", googleRoutes);
 
-// Serve Vite build
-const distPath = path.join(__dirname, "..", "client", "dist");
-app.use(express.static(distPath));
+if (process.env.NODE_ENV === "production") {
+  // Health route
+  app.get("/", (req, res) => {
+    res.json({ status: "ok", service: "dorc-api" });
+  });
+} else {
+  // Serve Vite build
+  const distPath = path.join(__dirname, "..", "client", "dist");
+  app.use(express.static(distPath));
 
-// SPA fallback
-app.get("/*splat", (req, res) => {
-  res.set("Cache-Control", "no-store"); // The application shell should not be cached to ensure users always receive the latest build
-  res.sendFile(path.join(distPath, "index.html"));
-});
+  // SPA fallback
+  app.get("/*splat", (req, res) => {
+    res.set("Cache-Control", "no-store"); // The application shell should not be cached to ensure users always receive the latest build
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
 // Error handler
 app.use((err, req, res, next) => {
@@ -103,12 +110,6 @@ app.use((err, req, res, next) => {
   res.set("Cache-Control", "no-store"); // Temporary server errors should not be cached
   res.status(500).json({ error: "Internal Server Error" });
 });
-
-// HTTPS Credentials
-const options = {
-  key: fs.readFileSync("private-key.pem"), // Path to your private key
-  cert: fs.readFileSync("certificate.pem"), // Path to your certificate
-};
 
 // Connect to MongoDB
 async function connectToMongoDB() {
@@ -121,8 +122,22 @@ async function connectToMongoDB() {
   }
 }
 
-// Create and start the HTTPS server
-https.createServer(options, app).listen(PORT, () => {
-  connectToMongoDB();
-  console.log(`HTTPS Server running at https://localhost:${PORT}`);
-});
+// Start the server
+if (process.env.NODE_ENV === "production") {
+  // In production we let the platform serve HTTPS at the edge
+  app.listen(PORT, () => {
+    connectToMongoDB();
+    console.log(`Server running on port ${PORT}`);
+  });
+} else {
+  // For local development we use the self-signed HTTPS server
+  const options = {
+    key: fs.readFileSync("private-key.pem"),
+    cert: fs.readFileSync("certificate.pem"),
+  };
+
+  https.createServer(options, app).listen(PORT, () => {
+    connectToMongoDB();
+    console.log(`HTTPS Server running at https://localhost:${PORT}`);
+  });
+}
