@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://dorc-app.onrender.com/api/:path*"
+    },
+    {
+      "source": "/auth/:path*",
+      "destination": "https://dorc-app.onrender.com/auth/:path*"
+    },
+    {
+      "source": "/api-docs/:path*",
+      "destination": "https://dorc-app.onrender.com/api-docs/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
