@@ -37,7 +37,7 @@ const register = validate([
     .withMessage("Email is required")
     .isEmail()
     .withMessage("Invalid email")
-    .normalizeEmail()
+    .normalizeEmail({ gmail_remove_dots: false, gmail_remove_subaddress: false })
     .bail()
     .custom(async (email) => {
       const user = await User.findOne({ email });
@@ -83,7 +83,7 @@ const modifyProfile = validate([
     .withMessage("Email is required")
     .isEmail()
     .withMessage("Invalid email")
-    .normalizeEmail()
+    .normalizeEmail({ gmail_remove_dots: false, gmail_remove_subaddress: false })
     .bail()
     .custom(async (email, { req }) => {
       //get the id from the req
