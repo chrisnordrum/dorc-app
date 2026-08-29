@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npm --prefix client run build",
-    "dev": "npm --prefix server run dev",
+    "dev": "(trap 'kill 0' SIGINT EXIT; npm --prefix server run dev & npm --prefix client run dev)",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
     "start": "npm --prefix server run start"
   },
   "repository": {
