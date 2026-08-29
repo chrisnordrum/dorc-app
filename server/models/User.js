@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
   bio: { type: String, default: null },
   email_iv: { type: String, required: true },
   bio_iv: { type: String, default: null },
-});
+}, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
 
