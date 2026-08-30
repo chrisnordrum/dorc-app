@@ -1,6 +1,7 @@
 "use strict";
 
 const mongoose = require("mongoose");
+const { timeZoneValidator } = require("../utils/timezone");
 
 /**
  * Model: QuestCompletion
@@ -39,6 +40,16 @@ const questCompletionSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 0,
+    },
+    // The IANA zone used to derive completedOn from createdAt, e.g.
+    // "Asia/Taipei". Snapshotted per completion so that a user relocating
+    // cannot retroactively shift the day their past completions counted
+    // toward. Never read User.timezone when interpreting an old completion.
+    timezone: {
+      type: String,
+      required: true,
+      default: "UTC",
+      validate: timeZoneValidator,
     },
   },
   { timestamps: true },
