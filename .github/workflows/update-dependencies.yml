@@ -25,53 +25,24 @@ jobs:
         with:
           node-version: 22.x
           cache: 'npm'
-          cache-dependency-path: |
-            server/package-lock.json
-            client/package-lock.json
+          cache-dependency-path: package-lock.json
 
-      - name: Install server dependencies
-        working-directory: ./server
+      - name: Install workspace dependencies
         run: npm ci
 
-      - name: Audit server dependencies
-        working-directory: ./server
+      - name: Audit dependencies
         run: npm audit || true
 
-      - name: Update server dependencies
-        working-directory: ./server
+      - name: Update dependencies
         run: npm update
 
-      - name: Check for server vulnerabilities
-        working-directory: ./server
+      - name: Check for vulnerabilities
         run: |
-          echo "## Server audit" >> $GITHUB_STEP_SUMMARY
+          echo "## Workspace audit" >> $GITHUB_STEP_SUMMARY
           if npm audit --audit-level=moderate; then
-            echo "No moderate, high, or critical vulnerabilities found in server." >> $GITHUB_STEP_SUMMARY
+            echo "No moderate, high, or critical vulnerabilities found." >> $GITHUB_STEP_SUMMARY
           else
-            echo "Moderate or higher vulnerabilities found in server!" >> $GITHUB_STEP_SUMMARY
-          fi
-
-      - name: Install client dependencies
-        working-directory: ./client
-        run: npm ci
-
-      - name: Audit client dependencies
-        working-directory: ./client
-        run: npm audit || true
-
-      - name: Update client dependencies
-        working-directory: ./client
-        run: npm update
-
-      - name: Check for client vulnerabilities
-        working-directory: ./client
-        run: |
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## Client audit" >> $GITHUB_STEP_SUMMARY
-          if npm audit --audit-level=moderate; then
-            echo "No moderate, high, or critical vulnerabilities found in client." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "Moderate or higher vulnerabilities found in client!" >> $GITHUB_STEP_SUMMARY
+            echo "Moderate or higher vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Commit and push dependency updates
@@ -79,8 +50,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add server/package.json server/package-lock.json
-          git add client/package.json client/package-lock.json
+          git add package.json package-lock.json
+          git add client/package.json server/package.json packages/shared/package.json
 
           git diff --staged --quiet || git commit -m "chore: update npm dependencies [skip ci]"
           git push

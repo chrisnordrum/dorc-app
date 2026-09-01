@@ -1,14 +1,20 @@
 {
   "name": "daily-quest-tracker",
   "version": "1.0.0",
+  "private": true,
   "description": "Daily Quest Tracker is a MERN stack RPG-style productivity app that turns habit-building into a game. Users create personal quests (habits or goals), earn XP for completing them, level up, unlock badges, and join guilds with friends to share progress and stay motivated.",
-  "main": "index.js",
+  "workspaces": [
+    "client",
+    "server",
+    "packages/shared"
+  ],
   "scripts": {
-    "build": "npm --prefix client run build",
-    "dev": "(trap 'kill 0' SIGINT EXIT; npm --prefix server run dev & npm --prefix client run dev)",
-    "dev:server": "npm --prefix server run dev",
-    "dev:client": "npm --prefix client run dev",
-    "start": "npm --prefix server run start"
+    "build": "npm run build --workspace client",
+    "dev": "(trap 'kill 0' SIGINT EXIT; npm run dev --workspace server & npm run dev --workspace client)",
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "start": "npm run start --workspace server",
+    "lint": "npm run lint --workspace client"
   },
   "repository": {
     "type": "git",
@@ -21,20 +27,5 @@
   "bugs": {
     "url": "https://github.com/chrisnordrum/daily-quest-tracker/issues"
   },
-  "homepage": "https://github.com/chrisnordrum/daily-quest-tracker#readme",
-  "dependencies": {
-    "@react-oauth/google": "^0.13.4",
-    "axios": "^1.13.6",
-    "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "express-session": "^1.19.0",
-    "google-auth-library": "^10.6.2",
-    "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.3.0",
-    "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
-  }
+  "homepage": "https://github.com/chrisnordrum/daily-quest-tracker#readme"
 }

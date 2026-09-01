@@ -113,12 +113,20 @@ gets an integration test in the same commit. Not later.
 
 No behaviour changes. This is the foundation three people work in.
 
-- [ ] 1.1 npm workspaces (`client`, `server`, `packages/shared`), one lockfile. Delete the
+- [x] 1.1 npm workspaces (`client`, `server`, `packages/shared`), one lockfile. Delete the
   ```
   stale `dependencies` block in the root `package.json` — it duplicates `express`,
   `mongoose`, `helmet`, `jsonwebtoken`, `axios` and others that are never imported at
   root. Move `react-router-dom` and `tailwindcss` out of `client` devDependencies, where
   they're misfiled.
+
+  *(Done. `react-router-dom` moved to `client` dependencies. `tailwindcss` was left in
+  devDependencies — it's only referenced by `postcss.config.js` and a JSDoc type in
+  `tailwind.config.js`, so it is build-time only, same as `postcss`, `autoprefixer` and
+  `vite` beside it. Vercel installs devDependencies, and the build passes.
+  Also folded in, because deleting `client/package-lock.json` and
+  `server/package-lock.json` breaks them otherwise: both workflows now install once from
+  the root lockfile. That is only the lockfile-path fix — 1.6 and 1.8 still rewrite them.)*
   ```
 - [ ] 1.2 `packages/shared` — Zod schemas for every API request/response, the types inferred
   ```

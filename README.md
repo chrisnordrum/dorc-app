@@ -40,6 +40,10 @@ cd daily-quest-tracker
 npm install
 ```
 
+This is an npm workspace (`client`, `server`, `packages/shared`) with a single lockfile at
+the root, so that one `npm install` covers every package. Don't run `npm install` inside
+`client/` or `server/` — it will create a second lockfile and a nested `node_modules`.
+
 ### Environment
 
 ```bash
