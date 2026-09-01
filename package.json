@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chrisnordrum/daily-quest-tracker.git"
+    "url": "git+https://github.com/chrisnordrum/dorc-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/chrisnordrum/daily-quest-tracker/issues"
+    "url": "https://github.com/chrisnordrum/dorc-app/issues"
   },
-  "homepage": "https://github.com/chrisnordrum/daily-quest-tracker#readme"
+  "homepage": "https://github.com/chrisnordrum/dorc-app#readme"
 }

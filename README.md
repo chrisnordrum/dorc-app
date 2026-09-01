@@ -35,8 +35,8 @@ Start there before picking up work.
 `mongod`).
 
 ```bash
-git clone https://github.com/chrisnordrum/daily-quest-tracker.git
-cd daily-quest-tracker
+git clone https://github.com/chrisnordrum/dorc-app.git
+cd dorc-app
 npm install
 ```
 
