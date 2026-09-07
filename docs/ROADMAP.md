@@ -132,10 +132,30 @@ No behaviour changes. This is the foundation three people work in.
   ```
   from them, and the pure XP math. This is the payoff: a contract change becomes a
   compile error in the client instead of a runtime surprise.
+
+  *Decide here how the two consumers import it: `packages/shared` is `"type": "module"`
+  and `server` is `"type": "commonjs"`, so a CommonJS `require("@dorc/shared")` won't
+  work as things stand. Either the server moves to ESM, or shared emits both. Its
+  `package.json` has no `main`/`types`/`exports` yet — 1.3 left that for this item.*
   ```
-- [ ] 1.3 `tsconfig.base.json` with `strict: true` and `allowJs: true`; per-workspace configs
+- [x] 1.3 `tsconfig.base.json` with `strict: true` and `allowJs: true`; per-workspace configs
   ```
   extending it.
+
+  *(Done. `checkJs` is deliberately **off**: `allowJs` pulls the existing `.js`/`.jsx` in so
+  TypeScript can resolve imports into it, while `checkJs: false` keeps those ~50 unconverted
+  files from failing CI. Opt a single file in with `// @ts-check` at the top when you're
+  ready to convert it.
+
+  Four configs, not three — `client/tsconfig.node.json` covers the build tooling
+  (`vite.config`, `postcss.config`, `tailwind.config`, `eslint.config`) separately, so
+  `@types/node` globals can't shadow the DOM ones in application code. `packages/shared`
+  gets `"types": []` on purpose: if something in there needs a node or DOM global, it isn't
+  shared code.
+
+  `npm run typecheck` at the root fans out to all three workspaces — that's the script 1.6
+  calls. Added `typescript` and `@types/node` to root devDependencies, and a stub
+  `packages/shared/src/index.ts` so the empty workspace has something to check.)*
   ```
 - [ ] 1.4 One flat ESLint config at root covering all workspaces (hoist the existing
   ```

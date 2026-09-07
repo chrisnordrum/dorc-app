@@ -1,0 +1,24 @@
+// Shared compiler settings. Every workspace tsconfig extends this and adds only the
+// options that differ: module system, lib, jsx, types.
+//
+// Nothing here emits. TypeScript is a checker in this repo — Vite builds the client and
+// node runs the server directly.
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "strict": true,
+
+    // New files are TypeScript; existing .js/.jsx converts when we're already editing it.
+    // allowJs lets the two live side by side. checkJs stays off so untouched JavaScript
+    // can't fail CI — opt a single file in with a `// @ts-check` comment at the top.
+    "allowJs": true,
+    "checkJs": false,
+
+    "noEmit": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  }
+}

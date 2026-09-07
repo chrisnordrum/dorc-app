@@ -14,7 +14,8 @@
     "dev:server": "npm run dev --workspace server",
     "dev:client": "npm run dev --workspace client",
     "start": "npm run start --workspace server",
-    "lint": "npm run lint --workspace client"
+    "lint": "npm run lint --workspace client",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,9 @@
   "bugs": {
     "url": "https://github.com/chrisnordrum/dorc-app/issues"
   },
-  "homepage": "https://github.com/chrisnordrum/dorc-app#readme"
+  "homepage": "https://github.com/chrisnordrum/dorc-app#readme",
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "typescript": "^5.9.3"
+  }
 }

@@ -1,0 +1,13 @@
+// The client's build tooling, which runs in node rather than the browser. Kept out of
+// tsconfig.json so @types/node globals can't shadow the DOM ones in application code
+// (setTimeout returning a Timeout instead of a number is the usual symptom).
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022"],
+    "types": ["node"]
+  },
+  "include": ["vite.config.*", "postcss.config.*", "tailwind.config.*", "eslint.config.*"]
+}

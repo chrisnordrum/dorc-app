@@ -4,5 +4,8 @@
   "private": true,
   "description": "Zod schemas, inferred types and pure XP math shared by client and server.",
   "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
   "license": "ISC"
 }

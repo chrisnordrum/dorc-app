@@ -1,0 +1,13 @@
+// No `types` — this package is isomorphic. If something in here needs a node or DOM
+// global, it doesn't belong in shared.
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "types": []
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
