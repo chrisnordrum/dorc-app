@@ -12,7 +12,11 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": "^22.18.0 || ^24.0.0"
+  },
   "dependencies": {
+    "@dorc/shared": "^0.0.0",
     "argon2": "^0.44.0",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",

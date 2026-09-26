@@ -128,15 +128,38 @@ No behaviour changes. This is the foundation three people work in.
   `server/package-lock.json` breaks them otherwise: both workflows now install once from
   the root lockfile. That is only the lockfile-path fix — 1.6 and 1.8 still rewrite them.)*
   ```
-- [ ] 1.2 `packages/shared` — Zod schemas for every API request/response, the types inferred
+- [x] 1.2 `packages/shared` — Zod schemas for every API request/response, the types inferred
   ```
   from them, and the pure XP math. This is the payoff: a contract change becomes a
   compile error in the client instead of a runtime surprise.
 
-  *Decide here how the two consumers import it: `packages/shared` is `"type": "module"`
-  and `server` is `"type": "commonjs"`, so a CommonJS `require("@dorc/shared")` won't
-  work as things stand. Either the server moves to ESM, or shared emits both. Its
-  `package.json` has no `main`/`types`/`exports` yet — 1.3 left that for this item.*
+  *(Done, except the XP math — that moved to 3.4, which already owns it. The level curve
+  isn't designed yet, and XP code ships with its tests, which need 1.5's test runner.
+
+  **How the consumers import it: neither option above — no build step.** The package
+  ships TypeScript source (`"exports": { ".": "./src/index.ts" }`). Vite compiles it into
+  the client. The server `require("@dorc/shared")`s it directly: Node >= 22.18 strips
+  the types at load time, and its `require()` can load an ES module. The server stays
+  CommonJS and there's no `dist/` to go stale. The cost is a Node floor, now pinned in
+  `server/package.json` `engines` (`^22.18.0 || ^24.0.0`) — Render reads that on the
+  next deploy. Verified on 22.18.0 and 24; 22.16 fails to load it.
+  Two rules follow, and `packages/shared/tsconfig.json` enforces both: relative
+  imports end in `.ts`, and only erasable TypeScript (no enums or namespaces; `import
+  type` for types).
+
+  Schemas are in `packages/shared/src/` by area: `auth`, `quests`, `catalog` (badges,
+  ranks, quotes), `admin`, `common`. **Nothing is wired in yet** — the server still
+  validates with express-validator until 2.7, and client code starts importing types
+  as it converts to TypeScript. Request schemas are written as the rules the server
+  *should* enforce: they add a username format and length caps that only the client
+  checks today, and login deliberately doesn't reuse the register rules.
+  The quest schemas describe the MongoDB `Quest` that PATCH/DELETE return. GET/POST
+  still serve `data.json`'s old shape until Phase 3.
+
+  Found while writing them down: `modify-profile` 500s if `bio` is omitted (the
+  validator calls it optional; the controller encrypts it unconditionally);
+  `Leaderboard.jsx` keys rows on `rank.id`, which ranks don't have; and
+  `/api/admin/users` returns email and bio as ciphertext plus IV.)*
   ```
 - [x] 1.3 `tsconfig.base.json` with `strict: true` and `allowJs: true`; per-workspace configs
   ```

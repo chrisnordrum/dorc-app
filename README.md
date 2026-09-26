@@ -31,8 +31,9 @@ Start there before picking up work.
 
 ## Running it locally
 
-**Prerequisites:** Node.js 22+, OpenSSL, and a MongoDB Atlas connection string (or a local
-`mongod`).
+**Prerequisites:** Node.js 22.18+ or 24, OpenSSL, and a MongoDB Atlas connection string (or
+a local `mongod`). 22.18 is a hard floor: the server loads `packages/shared` as TypeScript
+source through Node's built-in type stripping, which older versions don't enable by default.
 
 ```bash
 git clone https://github.com/chrisnordrum/dorc-app.git

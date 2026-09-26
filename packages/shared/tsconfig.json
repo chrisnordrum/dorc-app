@@ -1,12 +1,20 @@
 // No `types` — this package is isomorphic. If something in here needs a node or DOM
 // global, it doesn't belong in shared.
+//
+// The server runs this source through Node's type stripping, which deletes type
+// syntax and nothing else. `erasableSyntaxOnly` rejects TypeScript that would need
+// compiling (enums, namespaces, parameter properties); `verbatimModuleSyntax` makes
+// type-only imports say `import type`, so stripping them can't leave a runtime import
+// of something that doesn't exist.
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "lib": ["ES2022"],
-    "types": []
+    "types": [],
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

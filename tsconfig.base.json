@@ -15,6 +15,9 @@
     "checkJs": false,
 
     "noEmit": true,
+    // packages/shared imports its own files as `./auth.ts` (Node needs the real
+    // extension), and client and server typecheck those files when they import it.
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
