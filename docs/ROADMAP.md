@@ -185,18 +185,33 @@ type` for types).
   Linting the server for the first time turned up three unused `catch (error)` bindings
   and the Express error handler's unused `next` (it has to stay — Express identifies
   error handlers by arity), all fixed. The pre-existing client failure —
-  `AuthContext.jsx` exporting `useAuth` beside the provider — is an inline disable rather
-  than a file split. Also removed 50 stray code fences from this file that were
-  rendering every task description as a code block.)*
+  `AuthContext.jsx` exporting `useAuth` beside the provider — was an inline disable here;
+  the next commit replaced it with a file split (see 1.6). Also removed 50 stray code
+  fences from this file that were rendering every task description as a code block.)*
 
 - [ ] 1.5 Vitest + `supertest` + `mongodb-memory-server`. Requires splitting `server/index.js`
       so the configured `app` is exported separately from the `listen` call. Ship with three
       passing tests: register → login → refresh; unauthenticated request gets 401; non-admin
       hitting `/api/admin/users` gets 403.
-- [ ] 1.6 Rewrite `.github/workflows/node.js.yml`: one job on Node 22 (drop the 18/20/22
+- [x] 1.6 Rewrite `.github/workflows/node.js.yml`: one job on Node 22 (drop the 18/20/22
       matrix — we control the runtime), running `npm ci` → lint → format:check →
       `tsc --noEmit` → test → build → `npm audit --audit-level=high`, on push to `main` and
       on PRs.
+
+  *(Written before 1.4 and 1.5 landed, so **Format check** and **Test** are guarded:
+  each looks for its root script (`format:check`, `test`) and, finding none, emits a
+  yellow warning annotation on the run instead of failing. Each gets replaced with a plain
+  `run:` line once its script exists.
+
+  `tsc --noEmit` runs as `npm run typecheck`, which is that command per workspace (1.3).
+  The workflow is `contents: read` only, and a new push to a PR cancels that PR's run in
+  progress; runs on `main` always finish.
+
+  The `useAuth` lint failure is fixed by a split rather than 1.4's inline disable (the
+  preceding commit): the hook is now `hooks/useAuth.js` and the context object is
+  `contexts/authContextObject.js`. Not `authContext.js`: macOS filesystems are
+  case-insensitive, so the extensionless import `./contexts/AuthContext` would resolve to
+  that `.js` file before `AuthContext.jsx` locally, and to the right file on Vercel.)*
 - [ ] 1.7 Husky pre-push hook: lint + typecheck + tests.
 - [ ] 1.8 Change `update-dependencies.yml` to open a PR instead of pushing to `main`.
 

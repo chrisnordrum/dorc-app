@@ -1,5 +1,6 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# Actions for the server and client are split into separate jobs for parallel execution and to isolate failures
+# One job, one Node version: we control the runtime (server/package.json `engines`), so a
+# version matrix only tests runtimes we never deploy to. Steps run cheapest-first so a
+# failure surfaces as early as possible.
 
 name: Node.js CI
 
@@ -9,42 +10,57 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+
+# A new push to the same PR supersedes the run in progress. Runs on main always finish.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  server:
+  ci:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
           cache: "npm"
           cache-dependency-path: package-lock.json
 
-      - name: Install workspace dependencies
+      - name: Install
         run: npm ci
 
-  client:
-    runs-on: ubuntu-latest
+      - name: Lint
+        run: npm run lint
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
+      # format:check arrives with roadmap 1.4. Until then this warns instead of failing;
+      # 1.4 replaces the whole block with `run: npm run format:check`.
+      - name: Format check
+        run: |
+          if [ "$(npm pkg get scripts.format:check)" = "{}" ]; then
+            echo "::warning title=Format check skipped::No root format:check script yet (roadmap 1.4)"
+          else
+            npm run format:check
+          fi
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+      - name: Typecheck
+        run: npm run typecheck
 
-      - name: Install workspace dependencies
-        run: npm ci
+      # test arrives with roadmap 1.5. Same deal: 1.5 replaces this with `run: npm test`.
+      - name: Test
+        run: |
+          if [ "$(npm pkg get scripts.test)" = "{}" ]; then
+            echo "::warning title=Tests skipped::No root test script yet (roadmap 1.5)"
+          else
+            npm test
+          fi
 
-      - name: Build client
-        run: npm run build --workspace client
+      - name: Build
+        run: npm run build
+
+      - name: Audit
+        run: npm audit --audit-level=high
