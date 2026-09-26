@@ -15,7 +15,6 @@ export default function Nav() {
     <>
       <header className="sticky top-0 z-50 w-full bg-bg text-fg border-b-2 border-border">
         <nav className="mx-auto flex items-center px-6 sm:px-10 py-4 sm:py-5">
-
           <div className="flex-1 sm:hidden" />
 
           <Link to="/" className="flex justify-center sm:justify-start flex-1">
@@ -28,7 +27,6 @@ export default function Nav() {
 
           {/* Desktop Navigation */}
           <ul className="hidden sm:flex items-center gap-6 ml-auto">
-
             <li>
               <Link className="hover:text-accent transition-colors" to="/quest">
                 Quests
@@ -45,13 +43,19 @@ export default function Nav() {
             {loggedIn && (
               <>
                 <li>
-                  <Link className="hover:text-accent transition-colors" to="/leaderboard">
+                  <Link
+                    className="hover:text-accent transition-colors"
+                    to="/leaderboard"
+                  >
                     Leaderboard
                   </Link>
                 </li>
 
                 <li>
-                  <Link className="hover:text-accent transition-colors" to="/profile">
+                  <Link
+                    className="hover:text-accent transition-colors"
+                    to="/profile"
+                  >
                     Profile
                   </Link>
                 </li>
@@ -84,23 +88,31 @@ export default function Nav() {
       {/* Mobile Navigation */}
       <nav className="fixed bottom-1 left-1 right-1 z-50 border-2 border-border bg-bg backdrop-blur-md rounded-full sm:hidden">
         <ul className="flex justify-around items-center py-2 text-fg">
-
           <li>
-            <Link to="/" className="flex flex-col items-center gap-1 hover:text-accent">
+            <Link
+              to="/"
+              className="flex flex-col items-center gap-1 hover:text-accent"
+            >
               <RiHomeFill size={20} />
               <span className="text-xs">Home</span>
             </Link>
           </li>
 
           <li>
-            <Link to="/quest" className="flex flex-col items-center gap-1 hover:text-accent">
+            <Link
+              to="/quest"
+              className="flex flex-col items-center gap-1 hover:text-accent"
+            >
               <RiCompass3Fill size={20} />
               <span className="text-xs">Quests</span>
             </Link>
           </li>
 
           <li>
-            <Link to="/guild" className="flex flex-col items-center gap-1 hover:text-accent">
+            <Link
+              to="/guild"
+              className="flex flex-col items-center gap-1 hover:text-accent"
+            >
               <RiTeamFill size={20} />
               <span className="text-xs">Guild</span>
             </Link>
@@ -109,14 +121,20 @@ export default function Nav() {
           {loggedIn && (
             <>
               <li>
-                <Link to="/leaderboard" className="flex flex-col items-center gap-1 hover:text-accent">
+                <Link
+                  to="/leaderboard"
+                  className="flex flex-col items-center gap-1 hover:text-accent"
+                >
                   <RiTrophyFill size={20} />
                   <span className="text-xs">Ranks</span>
                 </Link>
               </li>
 
               <li>
-                <Link to="/profile" className="flex flex-col items-center gap-1 hover:text-accent">
+                <Link
+                  to="/profile"
+                  className="flex flex-col items-center gap-1 hover:text-accent"
+                >
                   <RiUserFill size={20} />
                   <span className="text-xs">Profile</span>
                 </Link>
@@ -126,13 +144,15 @@ export default function Nav() {
 
           {!loggedIn && (
             <li>
-              <Link to="/login" className="flex flex-col items-center gap-1 hover:text-accent">
+              <Link
+                to="/login"
+                className="flex flex-col items-center gap-1 hover:text-accent"
+              >
                 <RiUserFill size={20} />
                 <span className="text-xs">Login</span>
               </Link>
             </li>
           )}
-
         </ul>
       </nav>
     </>

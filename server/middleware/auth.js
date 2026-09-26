@@ -17,7 +17,7 @@ const authMiddleware = (req, res, next) => {
     req.user = decoded;
     // Call the next middleware function
     next();
-  } catch (error) {
+  } catch {
     // If the token is not valid, return a 401 error
     res.status(401).json({ message: "Token is not valid" });
   }

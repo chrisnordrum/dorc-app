@@ -251,7 +251,9 @@ export default function Profile() {
                 <p className="text-fg">Bio: {user?.bio || "N/A"}</p>
 
                 {successMessage && (
-                  <p className="text-sm text-green-600 mt-4">{successMessage}</p>
+                  <p className="text-sm text-green-600 mt-4">
+                    {successMessage}
+                  </p>
                 )}
               </div>
 
@@ -314,7 +316,10 @@ export default function Profile() {
               </button>
             </div>
 
-            <form className="flex flex-col gap-4" onSubmit={handleUpdateProfile}>
+            <form
+              className="flex flex-col gap-4"
+              onSubmit={handleUpdateProfile}
+            >
               <div className="flex gap-4">
                 <div className="w-full">
                   <label
@@ -473,7 +478,10 @@ export default function Profile() {
               </button>
             </div>
 
-            <form className="flex flex-col gap-4" onSubmit={handleUpdatePassword}>
+            <form
+              className="flex flex-col gap-4"
+              onSubmit={handleUpdatePassword}
+            >
               <div>
                 <label
                   className="block text-sm font-medium text-fg mb-1"
@@ -487,9 +495,7 @@ export default function Profile() {
                     id="newPassword"
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
-                    onChange={(e) =>
-                      setNewPassword(e.target.value)
-                    }
+                    onChange={(e) => setNewPassword(e.target.value)}
                     className={`w-full p-3 pr-12 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
                       errors.newPassword ? "border-red-500" : "border-border"
                     }`}
@@ -528,9 +534,7 @@ export default function Profile() {
                     id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
-                    onChange={(e) =>
-                      setConfirmPassword(e.target.value)
-                    }
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     className={`w-full p-3 pr-12 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
                       errors.confirmPassword
                         ? "border-red-500"

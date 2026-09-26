@@ -104,8 +104,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Error handler
-app.use((err, req, res, next) => {
+// Error handler. Express only treats a middleware as an error handler if it declares
+// all four parameters, so `_next` has to stay even though it's unused.
+app.use((err, req, res, _next) => {
   console.error(err.stack);
   res.set("Cache-Control", "no-store"); // Temporary server errors should not be cached
   res.status(500).json({ error: "Internal Server Error" });

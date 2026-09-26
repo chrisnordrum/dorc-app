@@ -6,12 +6,12 @@ A gamified habit tracker. Create quests for the things you're trying to do consi
 earn XP for completing them, level up, unlock badges, and join guilds with friends to keep
 each other honest.
 
-| | |
-|---|---|
-| **Client** | React 19 + Vite + Tailwind, deployed on Vercel |
-| **API** | Express 5 + Mongoose, deployed on Render |
-| **Database** | MongoDB Atlas |
-| **Auth** | Hand-rolled JWT (short-lived access token + HttpOnly refresh cookie) + Google OAuth |
+|              |                                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| **Client**   | React 19 + Vite + Tailwind, deployed on Vercel                                      |
+| **API**      | Express 5 + Mongoose, deployed on Render                                            |
+| **Database** | MongoDB Atlas                                                                       |
+| **Auth**     | Hand-rolled JWT (short-lived access token + HttpOnly refresh cookie) + Google OAuth |
 
 DORC began as a SAIT Web Security Fundamentals course project and is now being built out
 into a real application. The original course write-up is preserved at

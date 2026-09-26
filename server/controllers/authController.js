@@ -235,7 +235,7 @@ const refresh = async (req, res) => {
         ),
       },
     });
-  } catch (error) {
+  } catch {
     return res.status(403).json({ message: "Forbidden" });
   }
 };

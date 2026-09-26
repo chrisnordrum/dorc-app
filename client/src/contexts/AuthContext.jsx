@@ -112,6 +112,9 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
+// Exporting the hook beside the provider costs a full reload instead of a hot update
+// when this file is edited. Split it out if that ever gets annoying.
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -15,7 +15,9 @@ const usernameSchema = z
   );
 
 // 2.8 raises this to 12.
-const newPasswordSchema = z.string().min(8, "Password must be at least 8 characters long");
+const newPasswordSchema = z
+  .string()
+  .min(8, "Password must be at least 8 characters long");
 
 // No character-set restriction on purpose: the client's regex only admits Latin
 // letters, which is a UX choice, not a contract the server should hold people to.
@@ -23,7 +25,12 @@ const nameSchema = z.string().trim().min(1, "Required").max(50);
 
 // Trim and lowercase *before* validating: `z.email().trim()` checks the format
 // first and so rejects " Foo@Example.com ".
-const emailSchema = z.string().trim().toLowerCase().max(254).pipe(z.email("Invalid email"));
+const emailSchema = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .max(254)
+  .pipe(z.email("Invalid email"));
 
 const bioSchema = z.string().trim().max(280);
 

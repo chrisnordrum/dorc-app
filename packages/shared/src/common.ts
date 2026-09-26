@@ -18,7 +18,9 @@ export const errorResponseSchema = z.union([
   z.object({ message: z.string() }),
   z.object({ error: z.string() }),
   z.object({
-    errors: z.array(z.looseObject({ msg: z.string(), path: z.string().optional() })),
+    errors: z.array(
+      z.looseObject({ msg: z.string(), path: z.string().optional() }),
+    ),
   }),
 ]);
 export type ErrorResponse = z.infer<typeof errorResponseSchema>;

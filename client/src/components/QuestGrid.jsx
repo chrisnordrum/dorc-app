@@ -32,9 +32,7 @@ export default function QuestGrid({ limit }) {
     fetchQuests();
   }, []);
 
-  const displayedQuests = limit
-    ? quests.slice(0, limit)
-    : quests;
+  const displayedQuests = limit ? quests.slice(0, limit) : quests;
 
   if (loading) return <p>Loading quests...</p>;
   if (error) return <p>{error}</p>;

@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import {
-  validateUsername,
-  validatePassword,
-} from "../utils/validators";
-import {
-  sanitizeUsername,
-  sanitizePassword,
-} from "../utils/sanitizer";
+import { validateUsername, validatePassword } from "../utils/validators";
+import { sanitizeUsername, sanitizePassword } from "../utils/sanitizer";
 
 import googleIcon from "../assets/images/google.svg";
 

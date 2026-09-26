@@ -1,0 +1,12 @@
+package-lock.json
+dist
+coverage
+server/public
+client/public
+
+# Rewritten by POST /api/quests at runtime until Phase 3 deletes it.
+server/data/data.json
+
+# Archived course deliverable, kept as submitted. Its unfenced ASCII diagrams don't
+# survive reformatting.
+docs/security-coursework.md

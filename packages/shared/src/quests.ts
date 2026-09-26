@@ -48,7 +48,10 @@ export const updateQuestRequestSchema = z
     active: z.boolean(),
   })
   .partial()
-  .refine((body) => Object.keys(body).length > 0, "No updatable fields provided");
+  .refine(
+    (body) => Object.keys(body).length > 0,
+    "No updatable fields provided",
+  );
 export type UpdateQuestRequest = z.infer<typeof updateQuestRequestSchema>;
 
 // 200 from DELETE /api/quests/:id

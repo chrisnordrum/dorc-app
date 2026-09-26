@@ -3,7 +3,7 @@ const { getData } = require("../models/db");
 
 /**
  * Controller: Get daily quotes
- * 
+ *
  * Handles GET requests to fetch daily quotes from the database.
  *
  * @param {Object} req - Express request object

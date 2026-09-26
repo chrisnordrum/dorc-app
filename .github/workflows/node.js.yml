@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   server:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,18 +18,17 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
-    - name: Install workspace dependencies
-      run: npm ci
+      - name: Install workspace dependencies
+        run: npm ci
 
   client:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -38,15 +36,15 @@ jobs:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
-    - name: Install workspace dependencies
-      run: npm ci
+      - name: Install workspace dependencies
+        run: npm ci
 
-    - name: Build client
-      run: npm run build --workspace client
+      - name: Build client
+        run: npm run build --workspace client

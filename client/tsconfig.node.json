@@ -9,5 +9,5 @@
     "lib": ["ES2022"],
     "types": ["node"]
   },
-  "include": ["vite.config.*", "postcss.config.*", "tailwind.config.*", "eslint.config.*"]
+  "include": ["vite.config.*", "postcss.config.*", "tailwind.config.*"]
 }

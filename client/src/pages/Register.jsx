@@ -180,9 +180,7 @@ export default function Register() {
                 <input
                   id="username"
                   value={username}
-                  onChange={(e) =>
-                    setUsername(e.target.value)
-                  }
+                  onChange={(e) => setUsername(e.target.value)}
                   type="text"
                   placeholder="Username"
                   className={`p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
