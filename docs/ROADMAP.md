@@ -294,10 +294,26 @@ Phase 3 built the right primitives.
 Replaces the placeholder page. Every read and write needs a membership check, and invite
 tokens deserve the same care as auth tokens — same test discipline as 3.3.
 
-- [ ] 6.1 `Guild` and `GuildMembership` models with roles (owner / officer / member)
-- [ ] 6.2 Single-use invite tokens with expiry
-- [ ] 6.3 Guild feed of member completions
-- [ ] 6.4 Shared guild goals with pooled progress
+Guilds define their own **trackers** ("hours in the gym", "GitHub commits", "$ saved"),
+compete on raw totals over weekly or monthly windows, and crown a title holder ("Gym Bro of
+the Week") at each close. **The design, decisions and per-commit steps are in
+[`docs/GUILDS_PLAN.md`](GUILDS_PLAN.md)** — read it before picking up any 6.x item. Check an
+item off here when every step under its heading there is checked.
+
+- [ ] 6.1 Guild core — `Guild` and `GuildMembership` models with roles
+  (owner / officer / member), a `requireGuildRole` middleware that returns 404 to
+  non-members, and a real `Guild.jsx`
+- [ ] 6.2 Single-use invite tokens with expiry — hashed at rest, redeemed atomically
+- [ ] 6.3 Guild trackers (amount + unit + weekly/monthly window) and member entries, with
+  per-entry and per-day caps, a live leaderboard, and an optional pooled guild goal
+- [ ] 6.4 Titles — lazy, idempotent crowning at window close with a grace period, title
+  history, and a fixed XP bonus for the holder
+- [ ] 6.5 Disputes on entries, and a guild activity feed (guild activity only — solo quest
+  completions stay private)
+- [ ] 6.6 Guild achievements, instantiated by officers from system templates
+- [ ] 6.7 GitHub commits connector — OAuth link, encrypted token, daily sync
+- [ ] 6.8 Public guild discovery — **blocked on 8.5.** Non-members see a profile card only,
+  never amounts or entries
 
 ---
 
