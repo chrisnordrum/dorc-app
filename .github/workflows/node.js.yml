@@ -37,15 +37,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # format:check arrives with roadmap 1.4. Until then this warns instead of failing;
-      # 1.4 replaces the whole block with `run: npm run format:check`.
       - name: Format check
-        run: |
-          if [ "$(npm pkg get scripts.format:check)" = "{}" ]; then
-            echo "::warning title=Format check skipped::No root format:check script yet (roadmap 1.4)"
-          else
-            npm run format:check
-          fi
+        run: npm run format:check
 
       - name: Typecheck
         run: npm run typecheck

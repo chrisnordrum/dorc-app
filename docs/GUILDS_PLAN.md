@@ -26,15 +26,15 @@ instead of an eight-line placeholder.
 
 These roadmap items have to land first. Guilds are built on top of them, not alongside.
 
-| Item | Why guilds need it |
-| --- | --- |
-| 1.2 | Guild request/response schemas and the window/ranking math live in `packages/shared` |
-| 1.5 | Every guild route ships with its membership test |
-| 2.1 | Bearer auth, so the new routes don't inherit the custom `token` header |
-| 2.3 | Invite redemption and entry logging are rate-limited |
-| 2.5 | The GitHub connector stores its OAuth token with AES-256-GCM |
-| 2.7 | Guild routes validate with Zod from day one, not express-validator |
-| 3.1, 3.4 | User `xp` field and the XP engine, which title and achievement bonuses go through |
+| Item     | Why guilds need it                                                                   |
+| -------- | ------------------------------------------------------------------------------------ |
+| 1.2      | Guild request/response schemas and the window/ranking math live in `packages/shared` |
+| 1.5      | Every guild route ships with its membership test                                     |
+| 2.1      | Bearer auth, so the new routes don't inherit the custom `token` header               |
+| 2.3      | Invite redemption and entry logging are rate-limited                                 |
+| 2.5      | The GitHub connector stores its OAuth token with AES-256-GCM                         |
+| 2.7      | Guild routes validate with Zod from day one, not express-validator                   |
+| 3.1, 3.4 | User `xp` field and the XP engine, which title and achievement bonuses go through    |
 
 ## Concepts
 
@@ -55,17 +55,17 @@ These roadmap items have to land first. Guilds are built on top of them, not alo
 
 All guild collections carry `guildId`, so every query can be scoped by it.
 
-| Model | Fields | Indexes |
-| --- | --- | --- |
-| `Guild` | `name`, `description`, `timezone`, `ownerId`, `memberCount`, `visibility: "private"` | |
-| `GuildMembership` | `guildId`, `userId`, `role`, `status: active \| left \| banned`, `joinedAt` | unique `(guildId, userId)` |
-| `GuildInvite` | `guildId`, `tokenHash`, `createdBy`, `expiresAt`, `usedAt`, `usedBy` | unique `tokenHash` |
-| `GuildTracker` | `guildId`, `name`, `unit`, `category`, `window`, `titleName`, `maxPerEntry`, `maxPerDay`, `source: manual \| github`, `pooledGoal?`, `active` | `(guildId, active)` |
-| `GuildEntry` | `guildId`, `trackerId`, `userId`, `amount`, `loggedFor`, `note`, `source`, `status: active \| voided`, `disputedBy: [userId]` | `(trackerId, loggedFor)`; `(guildId, createdAt -1)` for the feed; unique `(trackerId, userId, loggedFor, source)` partial on `source != "manual"` |
-| `TitleAward` | `guildId`, `trackerId`, `windowStart`, `windowEnd`, `holderIds`, `score` | unique `(trackerId, windowStart)` |
-| `GuildAchievement` | `guildId`, `trackerId?`, `template`, `name`, `threshold` | |
-| `MemberAchievement` | `achievementId`, `guildId`, `userId`, `awardedAt` | unique `(achievementId, userId)` |
-| `ConnectedAccount` | `userId`, `provider: "github"`, `providerUserId`, `login`, `token` (GCM ciphertext), `scopes`, `lastSyncedAt` | unique `(provider, providerUserId)`; unique `(userId, provider)` |
+| Model               | Fields                                                                                                                                        | Indexes                                                                                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Guild`             | `name`, `description`, `timezone`, `ownerId`, `memberCount`, `visibility: "private"`                                                          |                                                                                                                                                   |
+| `GuildMembership`   | `guildId`, `userId`, `role`, `status: active \| left \| banned`, `joinedAt`                                                                   | unique `(guildId, userId)`                                                                                                                        |
+| `GuildInvite`       | `guildId`, `tokenHash`, `createdBy`, `expiresAt`, `usedAt`, `usedBy`                                                                          | unique `tokenHash`                                                                                                                                |
+| `GuildTracker`      | `guildId`, `name`, `unit`, `category`, `window`, `titleName`, `maxPerEntry`, `maxPerDay`, `source: manual \| github`, `pooledGoal?`, `active` | `(guildId, active)`                                                                                                                               |
+| `GuildEntry`        | `guildId`, `trackerId`, `userId`, `amount`, `loggedFor`, `note`, `source`, `status: active \| voided`, `disputedBy: [userId]`                 | `(trackerId, loggedFor)`; `(guildId, createdAt -1)` for the feed; unique `(trackerId, userId, loggedFor, source)` partial on `source != "manual"` |
+| `TitleAward`        | `guildId`, `trackerId`, `windowStart`, `windowEnd`, `holderIds`, `score`                                                                      | unique `(trackerId, windowStart)`                                                                                                                 |
+| `GuildAchievement`  | `guildId`, `trackerId?`, `template`, `name`, `threshold`                                                                                      |                                                                                                                                                   |
+| `MemberAchievement` | `achievementId`, `guildId`, `userId`, `awardedAt`                                                                                             | unique `(achievementId, userId)`                                                                                                                  |
+| `ConnectedAccount`  | `userId`, `provider: "github"`, `providerUserId`, `login`, `token` (GCM ciphertext), `scopes`, `lastSyncedAt`                                 | unique `(provider, providerUserId)`; unique `(userId, provider)`                                                                                  |
 
 `loggedFor` is a `"YYYY-MM-DD"` string in the **guild's** timezone — the same convention as
 `QuestCompletion.completedOn`, for the same reason.
@@ -78,7 +78,7 @@ Every step below obeys these. Anything touching membership, invites or XP ships 
 integration test in the same commit — the 3.3 discipline.
 
 - **Membership check on every route.** A `requireGuildRole(minRole)` middleware resolves
-  the guild from `:guildId` and the caller's *active* membership. A non-member gets
+  the guild from `:guildId` and the caller's _active_ membership. A non-member gets
   **404, not 403**, so a private guild's existence doesn't leak.
 - **No cross-guild ID smuggling.** Tracker, entry and achievement routes assert that the
   child document's `guildId` equals the URL's `:guildId`. Resolving a tracker by id alone
@@ -113,7 +113,7 @@ Settled in the 2026-09-25 planning interview. Don't relitigate without a reason.
   username was rejected because anyone could claim a prolific stranger's account.
 - **Scoring is raw total in the window.** Most hours / commits / dollars wins.
 - **Guild entries never award XP directly.** Winning a title or earning a guild achievement
-  grants a *fixed* bonus through the Phase 3 XP engine. Guilds invent their own trackers,
+  grants a _fixed_ bonus through the Phase 3 XP engine. Guilds invent their own trackers,
   so per-entry XP would let a guild farm the global leaderboard.
 - **Titles show both a live leader and an official holder.** During a window, the current
   leader is shown. At close, the top scorer is crowned and keeps the title until the next
@@ -154,7 +154,7 @@ Each one has the assumption the build uses until someone answers.
 **For the team (Owen, Diane):**
 
 1. **Dispute threshold.** Assumption: an entry is voided when disputes reach half of the
-   *other* active members, rounded up — or when any officer voids it. In a two-person guild
+   _other_ active members, rounded up — or when any officer voids it. In a two-person guild
    that means one friend can void the other's entry. Acceptable, or should small guilds
    need an officer?
 2. **Caps** of 25 members / 5 guilds per user / 10 trackers per guild. Assumption: as stated.
@@ -179,74 +179,74 @@ One step ≈ one commit.
 ### 6.1 Guild core
 
 - [ ] Zod schemas and inferred types for guild, membership and invite requests/responses in
-  `packages/shared/src/guilds.ts`, exported from `packages/shared/src/index.ts`.
+      `packages/shared/src/guilds.ts`, exported from `packages/shared/src/index.ts`.
 - [ ] `Guild` and `GuildMembership` models. `POST /api/guilds` (creator becomes owner),
-  `GET /api/guilds` (my guilds), `GET /api/guilds/:guildId`. `requireGuildRole` middleware.
-  Tests: non-member gets 404; creating a sixth guild is rejected.
+      `GET /api/guilds` (my guilds), `GET /api/guilds/:guildId`. `requireGuildRole` middleware.
+      Tests: non-member gets 404; creating a sixth guild is rejected.
 - [ ] Role management: promote/demote, kick, ban, leave, transfer ownership. Tests for each
-  invariant in **Security rules**.
+      invariant in **Security rules**.
 - [ ] `Guild.jsx`: my guilds list, create form, guild detail shell at `/guild/:guildId`.
 
 ### 6.2 Invites
 
 - [ ] `GuildInvite` model; create and revoke (officer+); redeem endpoint. Tests: expired,
-  reused, revoked, banned user, guild at member cap, two concurrent redeems — exactly one
-  succeeds.
+      reused, revoked, banned user, guild at member cap, two concurrent redeems — exactly one
+      succeeds.
 - [ ] Client: invite-link generator on the guild page and a `/join/:token` page.
 
 ### 6.3 Trackers and entries
 
 - [ ] `GuildTracker` model with officer-only create/edit/archive and the 10-tracker cap.
-  `windowFor(date, window, timeZone)` in shared, with tests across DST changes and
-  month/year boundaries.
+      `windowFor(date, window, timeZone)` in shared, with tests across DST changes and
+      month/year boundaries.
 - [ ] `GuildEntry`: log for today or yesterday (guild timezone), edit/delete own entry
-  while the window is open, enforce `maxPerEntry`/`maxPerDay`. Tests: tracker id from
-  another guild, editing another member's entry, over the cap, entry for a closed window.
+      while the window is open, enforce `maxPerEntry`/`maxPerDay`. Tests: tracker id from
+      another guild, editing another member's entry, over the cap, entry for a closed window.
 - [ ] Live leaderboard per tracker window (aggregation over active entries) returning the
-  current leader. Client tracker view with the leaderboard and a log form.
+      current leader. Client tracker view with the leaderboard and a log form.
 - [ ] Optional `pooledGoal` on a tracker, shown as a guild-wide progress bar.
 
 ### 6.4 Titles
 
 - [ ] `TitleAward` model and `closeDueWindows(guildId)`: lazy, idempotent, respects the
-  grace period, ties share the title, skips windows nobody logged in. Tests: concurrent
-  calls crown once; a window inside its grace period isn't crowned.
+      grace period, ties share the title, skips windows nobody logged in. Tests: concurrent
+      calls crown once; a window inside its grace period isn't crowned.
 - [ ] Title XP bonus through the Phase 3 XP engine, paid once per holder per award and only
-  if ≥2 members participated. Title history on the guild page and member profile.
+      if ≥2 members participated. Title history on the guild page and member profile.
 
 ### 6.5 Disputes and feed
 
 - [ ] Dispute / withdraw dispute; void on threshold or officer action; voided entries drop
-  out of leaderboards and crowning. Tests: can't dispute your own entry; can't dispute
-  twice; a non-member can't dispute.
+      out of leaderboards and crowning. Tests: can't dispute your own entry; can't dispute
+      twice; a non-member can't dispute.
 - [ ] Guild feed of entries, crowns and achievements, newest first, cursor-paginated.
 
 ### 6.6 Achievements
 
 - [ ] `GuildAchievement` and `MemberAchievement` models; the four templates as pure
-  evaluators in shared, unit-tested.
+      evaluators in shared, unit-tested.
 - [ ] Evaluate on entry write and on crown; award the XP bonus exactly once. Officer UI to
-  create achievements; earned ones shown on the member's profile.
+      create achievements; earned ones shown on the member's profile.
 
 ### 6.7 GitHub connector
 
 - [ ] **Spike first:** confirm what `read:user` plus `contributionsCollection` returns for
-  private-repo contributions, and what the rate limits look like. Record the answer in
-  **Decisions** before building.
+      private-repo contributions, and what the rate limits look like. Record the answer in
+      **Decisions** before building.
 - [ ] `ConnectedAccount` model and the GitHub OAuth link/unlink flow: env-driven callback
-  URL, `state` parameter checked on return, token encrypted with GCM. Carry over whatever
-  2.4 learned fixing Google OAuth.
+      URL, `state` parameter checked on return, token encrypted with GCM. Carry over whatever
+      2.4 learned fixing Google OAuth.
 - [ ] Sync: a `source: github` tracker upserts one entry per linked member per day.
-  Triggered on view (throttled per member) and once daily. Manual entries are rejected on
-  GitHub trackers; members without a linked account see a "link GitHub" prompt.
+      Triggered on view (throttled per member) and once daily. Manual entries are rejected on
+      GitHub trackers; members without a linked account see a "link GitHub" prompt.
 
 ### 6.8 Public discovery — blocked on ROADMAP 8.5
 
 Don't start until site-wide moderation exists. Strangers joining guilds needs it.
 
 - [ ] `visibility: "public"`; a directory endpoint returning the profile card only; join
-  requests approved by officers; report-a-guild feeding 8.5's moderation queue.
-  Revisit the "amounts always visible" decision before shipping this.
+      requests approved by officers; report-a-guild feeding 8.5's moderation queue.
+      Revisit the "amounts always visible" decision before shipping this.
 
 ---
 

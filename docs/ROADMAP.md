@@ -223,8 +223,8 @@ type` for types).
 
   *(Written before 1.4 and 1.5 landed, so **Format check** and **Test** started out
   guarded: each looked for its root script (`format:check`, `test`) and, finding none,
-  emitted a yellow warning annotation on the run instead of failing. 1.5 replaced the
-  **Test** guard with a plain `run: npm test`; **Format check** is still guarded.
+  emitted a yellow warning annotation on the run instead of failing. Both are plain `run:`
+  steps now; every step in the workflow runs for real.
 
   `tsc --noEmit` runs as `npm run typecheck`, which is that command per workspace (1.3).
   The workflow is `contents: read` only, and a new push to a PR cancels that PR's run in
@@ -235,6 +235,7 @@ type` for types).
   `contexts/authContextObject.js`. Not `authContext.js`: macOS filesystems are
   case-insensitive, so the extensionless import `./contexts/AuthContext` would resolve to
   that `.js` file before `AuthContext.jsx` locally, and to the right file on Vercel.)*
+
 - [ ] 1.7 Husky pre-push hook: lint + typecheck + tests.
 - [ ] 1.8 Change `update-dependencies.yml` to open a PR instead of pushing to `main`.
 
@@ -339,19 +340,19 @@ the Week") at each close. **The design, decisions and per-commit steps are in
 item off here when every step under its heading there is checked.
 
 - [ ] 6.1 Guild core — `Guild` and `GuildMembership` models with roles
-  (owner / officer / member), a `requireGuildRole` middleware that returns 404 to
-  non-members, and a real `Guild.jsx`
+      (owner / officer / member), a `requireGuildRole` middleware that returns 404 to
+      non-members, and a real `Guild.jsx`
 - [ ] 6.2 Single-use invite tokens with expiry — hashed at rest, redeemed atomically
 - [ ] 6.3 Guild trackers (amount + unit + weekly/monthly window) and member entries, with
-  per-entry and per-day caps, a live leaderboard, and an optional pooled guild goal
+      per-entry and per-day caps, a live leaderboard, and an optional pooled guild goal
 - [ ] 6.4 Titles — lazy, idempotent crowning at window close with a grace period, title
-  history, and a fixed XP bonus for the holder
+      history, and a fixed XP bonus for the holder
 - [ ] 6.5 Disputes on entries, and a guild activity feed (guild activity only — solo quest
-  completions stay private)
+      completions stay private)
 - [ ] 6.6 Guild achievements, instantiated by officers from system templates
 - [ ] 6.7 GitHub commits connector — OAuth link, encrypted token, daily sync
 - [ ] 6.8 Public guild discovery — **blocked on 8.5.** Non-members see a profile card only,
-  never amounts or entries
+      never amounts or entries
 
 ---
 
