@@ -100,5 +100,9 @@ docs/        Roadmap and the archived security coursework
 ## Contributing
 
 `main` is not protected — CI is the safety net, so **do not push work that hasn't passed
-locally.** Details, conventions and the current task list are in
+locally.** A pre-push hook enforces this: `git push` runs lint, format check, typecheck and
+tests first, and aborts if any fail. `npm install` sets it up; if you cloned before the hook
+existed, run `npm install` once more. `npm run format` fixes a format-check failure.
+
+Details, conventions and the current task list are in
 [`docs/ROADMAP.md`](docs/ROADMAP.md).

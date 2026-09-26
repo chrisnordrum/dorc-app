@@ -70,8 +70,8 @@ characters, `SESSION_SECRET` is 82. No rotation needed on those.
 ## How we work
 
 - `main` **is not protected.** Push directly. CI is the safety net, which means
-  **do not push what hasn't passed locally.** Phase 1.7 adds a pre-push hook so this is
-  automatic rather than a matter of discipline.
+  **do not push what hasn't passed locally.** A pre-push hook (1.7) makes this automatic
+  rather than a matter of discipline.
 - **New files are TypeScript.** Existing `.js`/`.jsx` converts when you're already editing it.
   No big-bang rewrite, no separate migration project.
 - **Security-sensitive code ships with its test.** Anything touching auth, ownership or XP
@@ -236,7 +236,22 @@ type` for types).
   case-insensitive, so the extensionless import `./contexts/AuthContext` would resolve to
   that `.js` file before `AuthContext.jsx` locally, and to the right file on Vercel.)*
 
-- [ ] 1.7 Husky pre-push hook: lint + typecheck + tests.
+- [x] 1.7 Husky pre-push hook: lint + typecheck + tests.
+
+  *(Done. `.husky/pre-push` runs lint → format:check → typecheck → test, in CI's order,
+  and a failure aborts the push. format:check is an addition: it's a CI step, costs under
+  a second, and is the one most likely to fail after hand edits. The build and audit
+  steps are left to CI. The whole hook takes about 5 seconds.
+
+  The root `prepare` script is `husky || true`, which points `core.hooksPath` at `.husky/_`
+  on every root `npm install`. The `|| true` is load-bearing: a production install
+  (`NODE_ENV=production`, as Render may run it from `server/`) skips devDependencies, and
+  a bare `husky` then fails the install with exit 127. Checked both ways.
+
+  The hook checks the working tree, not the commits being pushed, so uncommitted edits
+  can make it pass or fail. `git push --no-verify` skips it — for emergencies only,
+  since CI will still go red.)*
+
 - [ ] 1.8 Change `update-dependencies.yml` to open a PR instead of pushing to `main`.
 
 ---
