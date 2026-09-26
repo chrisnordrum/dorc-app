@@ -50,14 +50,10 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      # test arrives with roadmap 1.5. Same deal: 1.5 replaces this with `run: npm test`.
+      # Server tests run against an in-memory mongod that `npm ci` downloads, so they
+      # need no database or secrets from the repo.
       - name: Test
-        run: |
-          if [ "$(npm pkg get scripts.test)" = "{}" ]; then
-            echo "::warning title=Tests skipped::No root test script yet (roadmap 1.5)"
-          else
-            npm test
-          fi
+        run: npm test
 
       - name: Build
         run: npm run build

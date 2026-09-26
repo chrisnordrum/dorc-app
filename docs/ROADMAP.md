@@ -189,19 +189,42 @@ type` for types).
   the next commit replaced it with a file split (see 1.6). Also removed 50 stray code
   fences from this file that were rendering every task description as a code block.)*
 
-- [ ] 1.5 Vitest + `supertest` + `mongodb-memory-server`. Requires splitting `server/index.js`
+- [x] 1.5 Vitest + `supertest` + `mongodb-memory-server`. Requires splitting `server/index.js`
       so the configured `app` is exported separately from the `listen` call. Ship with three
       passing tests: register → login → refresh; unauthenticated request gets 401; non-admin
       hitting `/api/admin/users` gets 403.
+
+  *(Done. `server/app.js` is the configured app and exports it; `server/index.js` is now
+  only the Mongo connection and the HTTP/HTTPS listener. `npm test` at the root fans out
+  to every workspace with a `test` script — today that's just the server's `vitest run`.
+  CI's **Test** step is now a plain `npm test`.
+
+  Tests live in `server/test/*.test.ts`. `test/setup.ts` gives each test file its own
+  in-memory mongod and empties every collection after each test, so tests register
+  their own users through the API and never share state. `vitest.config.ts` supplies
+  throwaway secrets, so the suite needs no `.env` — locally or in CI.
+  `mongodb-memory-server` downloads a mongod binary (~140MB) into
+  `node_modules/.cache` on install, so every `npm ci` — including every CI run — fetches
+  it again.
+
+  Two things to know when writing the next test. The refresh cookie is `Secure` and
+  supertest speaks plain HTTP, so a supertest agent's cookie jar silently drops it —
+  `auth.test.ts` reads `Set-Cookie` and sends the `Cookie` header by hand. And the
+  passport Google strategy throws at `require` time without `GOOGLE_CLIENT_ID`, which is
+  why the test config sets a fake one; 2.4 should make that lazy.
+
+  Checked that the suite can fail: with `authorize("admin")` removed from
+  `/api/admin/users`, the 403 test goes red with a 200.)*
+
 - [x] 1.6 Rewrite `.github/workflows/node.js.yml`: one job on Node 22 (drop the 18/20/22
       matrix — we control the runtime), running `npm ci` → lint → format:check →
       `tsc --noEmit` → test → build → `npm audit --audit-level=high`, on push to `main` and
       on PRs.
 
-  *(Written before 1.4 and 1.5 landed, so **Format check** and **Test** are guarded:
-  each looks for its root script (`format:check`, `test`) and, finding none, emits a
-  yellow warning annotation on the run instead of failing. Each gets replaced with a plain
-  `run:` line once its script exists.
+  *(Written before 1.4 and 1.5 landed, so **Format check** and **Test** started out
+  guarded: each looked for its root script (`format:check`, `test`) and, finding none,
+  emitted a yellow warning annotation on the run instead of failing. 1.5 replaced the
+  **Test** guard with a plain `run: npm test`; **Format check** is still guarded.
 
   `tsc --noEmit` runs as `npm run typecheck`, which is that command per workspace (1.3).
   The workflow is `contents: read` only, and a new push to a PR cancels that PR's run in
