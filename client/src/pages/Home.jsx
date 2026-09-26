@@ -1,7 +1,7 @@
 import QuestGrid from "../components/QuestGrid";
 import { useNavigate } from "react-router-dom";
 import { RiArrowRightLine } from "react-icons/ri";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Home() {
   const navigate = useNavigate();

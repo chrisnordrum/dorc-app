@@ -1,4 +1,4 @@
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "./useAuth";
 
 export function useAuthFetch() {
   const { token, refresh, logout } = useAuth();

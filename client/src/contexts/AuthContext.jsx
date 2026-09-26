@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
-
-const AuthContext = createContext();
+import { useState, useEffect } from "react";
+import { AuthContext } from "./authContextObject";
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState("");
@@ -111,16 +110,3 @@ export function AuthProvider({ children }) {
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
-
-// Exporting the hook beside the provider costs a full reload instead of a hot update
-// when this file is edited. Split it out if that ever gets annoying.
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error(
-      "Context Error: useAuth must be used within the Auth Provider",
-    );
-  }
-  return context;
-};
