@@ -262,12 +262,18 @@ type` for types).
   belongs to the workflow; commits pushed to it by hand are overwritten the next week.
 
   No third-party action and no stored token: it uses `gh` with the job's `GITHUB_TOKEN`.
-  The catch is that GitHub doesn't let a `GITHUB_TOKEN` push or PR trigger other
-  workflows, so CI would never run on the PR. `workflow_dispatch` is the one exception,
-  so `node.js.yml` gained that trigger and the job dispatches it on the branch; the check
-  lands on the PR's head commit. `HUSKY=0` stops the bot's push from running the pre-push
-  hook, since CI covers it. This needs the repo setting **Settings → Actions → General →
-  Allow GitHub Actions to create and approve pull requests**. The removed
+  That needs the repo setting **Settings → Actions → General → Allow GitHub Actions to
+  create and approve pull requests**, now on. Because `main` has no branch protection,
+  letting the token approve PRs unlocks nothing today; revisit it if required reviews
+  are ever added.
+
+  **Merging it takes one extra click.** GitHub holds CI on a PR opened with `GITHUB_TOKEN`
+  at "action required" until a person approves it. Open the PR, click _Approve and run
+  workflows_, and merge once `ci` is green. Tested on the first run (PR #14): approving
+  the held run put a passing `ci` check on the PR. An earlier version dispatched CI with
+  `workflow_dispatch` instead. That run passed and attached to the commit, but GitHub's
+  PR checks list doesn't show dispatch runs, so it was dropped. `HUSKY=0` stops the bot's
+  push from running the pre-push hook, since CI covers it. The removed
   `if: github.actor != 'github-actions[bot]'` guarded against a push loop that can't
   happen: the workflow only runs on a schedule or by hand.)*
 

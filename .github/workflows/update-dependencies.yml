@@ -1,5 +1,8 @@
 # Weekly `npm update`, delivered as a pull request instead of a push to main, so the new
 # lockfile goes through CI and a human merges it.
+#
+# GitHub holds CI on a PR opened with GITHUB_TOKEN until someone approves it: open the PR
+# and click "Approve and run workflows". That's the review step, not a workaround.
 
 name: Audit and Update Dependencies
 
@@ -8,12 +11,10 @@ on:
   schedule:
     - cron: "0 9 * * 1"
 
-# contents: push the update branch. pull-requests: open the PR. actions: dispatch CI on
-# it (see the last step).
+# contents: push the update branch. pull-requests: open the PR.
 permissions:
   contents: write
   pull-requests: write
-  actions: write
 
 concurrency:
   group: update-dependencies
@@ -87,8 +88,3 @@ jobs:
             gh pr create --base main --head "$BRANCH" \
               --title "Update npm dependencies" --body-file "$RUNNER_TEMP/body.md"
           fi
-
-          # A push or PR made with GITHUB_TOKEN doesn't trigger other workflows (GitHub's
-          # guard against loops), so CI wouldn't run on this PR by itself. workflow_dispatch
-          # is the exception, and the run's check lands on the PR's head commit.
-          gh workflow run node.js.yml --ref "$BRANCH"
