@@ -252,7 +252,24 @@ type` for types).
   can make it pass or fail. `git push --no-verify` skips it — for emergencies only,
   since CI will still go red.)*
 
-- [ ] 1.8 Change `update-dependencies.yml` to open a PR instead of pushing to `main`.
+- [x] 1.8 Change `update-dependencies.yml` to open a PR instead of pushing to `main`.
+
+  *(Done. Until now the Monday job committed `npm update` straight to `main` with
+  `[skip ci]`, so five lockfile updates landed without CI ever seeing them. Now it
+  rebuilds the `deps/npm-update` branch from `main`, force-pushes it, and opens a PR
+  titled "Update npm dependencies" — or refreshes the open one — with the post-update
+  `npm audit` output in the body. When nothing changed it opens nothing. The branch
+  belongs to the workflow; commits pushed to it by hand are overwritten the next week.
+
+  No third-party action and no stored token: it uses `gh` with the job's `GITHUB_TOKEN`.
+  The catch is that GitHub doesn't let a `GITHUB_TOKEN` push or PR trigger other
+  workflows, so CI would never run on the PR. `workflow_dispatch` is the one exception,
+  so `node.js.yml` gained that trigger and the job dispatches it on the branch; the check
+  lands on the PR's head commit. `HUSKY=0` stops the bot's push from running the pre-push
+  hook, since CI covers it. This needs the repo setting **Settings → Actions → General →
+  Allow GitHub Actions to create and approve pull requests**. The removed
+  `if: github.actor != 'github-actions[bot]'` guarded against a push loop that can't
+  happen: the workflow only runs on a schedule or by hand.)*
 
 ---
 

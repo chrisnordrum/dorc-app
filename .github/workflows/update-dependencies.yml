@@ -1,3 +1,6 @@
+# Weekly `npm update`, delivered as a pull request instead of a push to main, so the new
+# lockfile goes through CI and a human merges it.
+
 name: Audit and Update Dependencies
 
 on:
@@ -5,20 +8,30 @@ on:
   schedule:
     - cron: "0 9 * * 1"
 
+# contents: push the update branch. pull-requests: open the PR. actions: dispatch CI on
+# it (see the last step).
 permissions:
   contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: update-dependencies
+
+env:
+  # The branch belongs to this workflow: every run rebuilds it from main and force-pushes,
+  # so don't commit to it by hand.
+  BRANCH: deps/npm-update
+  # `npm ci` would install the Husky pre-push hook. The PR gets real CI instead.
+  HUSKY: "0"
 
 jobs:
   audit-and-update:
     runs-on: ubuntu-latest
 
-    if: github.actor != 'github-actions[bot]'
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -30,28 +43,52 @@ jobs:
       - name: Install workspace dependencies
         run: npm ci
 
-      - name: Audit dependencies
-        run: npm audit || true
-
       - name: Update dependencies
         run: npm update
 
-      - name: Check for vulnerabilities
+      - name: Audit the updated tree
         run: |
-          echo "## Workspace audit" >> $GITHUB_STEP_SUMMARY
-          if npm audit --audit-level=moderate; then
-            echo "No moderate, high, or critical vulnerabilities found." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "Moderate or higher vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## npm audit after update"
+            echo
+            echo '```'
+            npm audit --audit-level=moderate || true
+            echo '```'
+          } > "$RUNNER_TEMP/audit.md"
+          cat "$RUNNER_TEMP/audit.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          files="package.json package-lock.json client/package.json server/package.json packages/shared/package.json"
+
+          if git diff --quiet -- $files; then
+            echo "Dependencies are already up to date." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
 
-      - name: Commit and push dependency updates
-        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$BRANCH"
+          git add $files
+          git commit -m "Update npm dependencies"
+          git push --force origin "$BRANCH"
 
-          git add package.json package-lock.json
-          git add client/package.json server/package.json packages/shared/package.json
+          {
+            echo "Weekly \`npm update\` from the scheduled workflow. Merge once CI is green."
+            echo
+            cat "$RUNNER_TEMP/audit.md"
+          } > "$RUNNER_TEMP/body.md"
 
-          git diff --staged --quiet || git commit -m "chore: update npm dependencies [skip ci]"
-          git push
+          if [ "$(gh pr view "$BRANCH" --json state --jq .state 2>/dev/null)" = "OPEN" ]; then
+            gh pr edit "$BRANCH" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "Update npm dependencies" --body-file "$RUNNER_TEMP/body.md"
+          fi
+
+          # A push or PR made with GITHUB_TOKEN doesn't trigger other workflows (GitHub's
+          # guard against loops), so CI wouldn't run on this PR by itself. workflow_dispatch
+          # is the exception, and the run's check lands on the PR's head commit.
+          gh workflow run node.js.yml --ref "$BRANCH"
