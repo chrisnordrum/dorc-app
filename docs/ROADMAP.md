@@ -128,8 +128,9 @@ No behaviour changes. This is the foundation three people work in.
   the client. The server `require("@dorc/shared")`s it directly: Node >= 22.18 strips
   the types at load time, and its `require()` can load an ES module. The server stays
   CommonJS and there's no `dist/` to go stale. The cost is a Node floor, now pinned in
-  `server/package.json` `engines` (`^22.18.0 || ^24.0.0`) — Render reads that on the
-  next deploy. Verified on 22.18.0 and 24; 22.16 fails to load it.
+  `server/package.json` `engines` — Render reads that on the next deploy. Verified on
+  22.18.0 and 24; 22.16 fails to load it. (The floor has since been raised to the October
+  2026 security releases, `^22.23.4 || ^24.22.1`.)
   Two rules follow, and `packages/shared/tsconfig.json` enforces both: relative
   imports end in `.ts`, and only erasable TypeScript (no enums or namespaces; `import
 type` for types).
