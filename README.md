@@ -31,9 +31,11 @@ Start there before picking up work.
 
 ## Running it locally
 
-**Prerequisites:** Node.js 22.18+ or 24, OpenSSL, and a MongoDB Atlas connection string (or
-a local `mongod`). 22.18 is a hard floor: the server loads `packages/shared` as TypeScript
-source through Node's built-in type stripping, which older versions don't enable by default.
+**Prerequisites:** Node.js 22.23.4+ or 24.22.1+, OpenSSL, and a MongoDB Atlas connection
+string (or a local `mongod`). Those are the October 2026 security releases, which fix a
+Brotli decoder RCE that `express.json()` reaches through `Content-Encoding: br`. The
+original floor was 22.18: the server loads `packages/shared` as TypeScript source through
+Node's built-in type stripping, which older versions don't enable by default.
 
 ```bash
 git clone https://github.com/chrisnordrum/dorc-app.git
