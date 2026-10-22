@@ -62,14 +62,14 @@ export default function Admin() {
 
   if (error) {
     return (
-      <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary/10 via-bg to-accent/20 flex items-center justify-center">
+      <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-primary/10 via-bg to-accent/20 flex items-center justify-center">
         <h2 className="text-red-700 text-xl">{error}</h2>
       </main>
     );
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary/10 via-bg to-accent/20">
+    <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-primary/10 via-bg to-accent/20">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-400 dark:bg-indigo-600 opacity-30 rounded-full blur-3xl" />
       <div className="absolute top-40 -right-40 w-96 h-96 bg-purple-400 dark:bg-purple-600 opacity-30 rounded-full blur-3xl" />
 
@@ -79,7 +79,7 @@ export default function Admin() {
           <p className="font-light text-fg/80">{message}</p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-[8fr,2fr] mb-6">
+        <div className="grid gap-4 md:grid-cols-[8fr_2fr] mb-6">
           <div className="relative">
             <label
               htmlFor="userSearch"
@@ -92,7 +92,7 @@ export default function Admin() {
               id="userSearch"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-transparent w-full p-2 border border-border rounded-full text-fg focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="pl-10 bg-transparent w-full p-2 border border-border rounded-full text-fg focus:outline-hidden focus:ring-2 focus:ring-primary/50"
               placeholder="Search by name, username, or email..."
             />
             <RiSearchLine
@@ -112,7 +112,7 @@ export default function Admin() {
               id="roleFilter"
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              className="pl-5 appearance-none w-full p-2 border border-border rounded-full bg-transparent text-fg focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="pl-5 appearance-none w-full p-2 border border-border rounded-full bg-transparent text-fg focus:outline-hidden focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All Roles</option>
               <option value="admin">Admin</option>

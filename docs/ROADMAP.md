@@ -108,7 +108,10 @@ No behaviour changes. This is the foundation three people work in.
   _(Done. `react-router-dom` moved to `client` dependencies. `tailwindcss` was left in
   devDependencies — it's only referenced by `postcss.config.js` and a JSDoc type in
   `tailwind.config.js`, so it is build-time only, same as `postcss`, `autoprefixer` and
-  `vite` beside it. Vercel installs devDependencies, and the build passes.
+  `vite` beside it. Vercel installs devDependencies, and the build passes. (Since the
+  Tailwind 4 upgrade, `tailwindcss` is loaded through `@tailwindcss/vite`;
+  `postcss.config.js`, `tailwind.config.js` and `autoprefixer` are gone, and the theme
+  lives in `client/src/index.css`.)
   Also folded in, because deleting `client/package-lock.json` and
   `server/package-lock.json` breaks them otherwise: both workflows now install once from
   the root lockfile. That is only the lockfile-path fix — 1.6 and 1.8 still rewrite them.)_
@@ -155,7 +158,7 @@ type` for types).
   ready to convert it.
 
   Four configs, not three — `client/tsconfig.node.json` covers the build tooling
-  (`vite.config`, `postcss.config`, `tailwind.config`) separately, so
+  (`vite.config`) separately, so
   `@types/node` globals can't shadow the DOM ones in application code. `packages/shared`
   gets `"types": []` on purpose: if something in there needs a node or DOM global, it isn't
   shared code.
