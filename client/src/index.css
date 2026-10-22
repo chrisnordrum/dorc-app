@@ -1,3 +1,30 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Light values live in the theme; html.dark overrides the same variables, so every
+   bg-bg / text-fg / border-border utility switches with the class. */
+@theme {
+  --color-bg: #f4fbff;
+  --color-fg: #00182e;
+  --color-card: #ffffff;
+  --color-border: #002548;
+  --color-primary: #002548;
+  --color-accent: #5aa7ff;
+
+  --font-sans: "Alexandria", sans-serif;
+  --font-display: "Geologica", sans-serif;
+}
+
+html.dark {
+  --color-bg: #00182e;
+  --color-fg: #f4fbff;
+  --color-card: #002548;
+  --color-border: #5aa7ff;
+  --color-primary: #5aa7ff;
+  --color-accent: #5aa7ff;
+}
+
 @font-face {
   font-family: "Geologica";
   src: url("assets/fonts/Geologica-Black.ttf") format("truetype");
@@ -12,56 +39,54 @@
   font-style: normal;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --color-bg: #f4fbff;
-  --color-fg: #00182e;
-  --color-card: #ffffff;
-  --color-border: #002548;
-  --color-primary: #002548;
-
-  --color-accent: #5aa7ff;
-}
-
-html.dark {
-  --color-bg: #00182e;
-  --color-fg: #f4fbff;
-  --color-card: #002548;
-  --color-border: #5aa7ff;
-  --color-primary: #5aa7ff;
-  --color-accent: #5aa7ff;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-fg);
-  font-family: "Alexandria", sans-serif;
-}
-
-main,
-nav {
-  max-width: 100vw;
-  margin: 0 auto;
-}
-
-main {
-  padding: 2rem 1rem;
-}
-
-h1 {
-  font-family: "Geologica", sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  text-transform: uppercase;
-  line-height: 1;
-  text-align: center;
-  color: var(--color-fg);
-}
-
-@layer components {
-  .h1-home {
-    font-size: clamp(2.5rem, 6vw, 5rem);
+@layer base {
+  /* Tailwind 3 defaults that v4 dropped: a bare `border` was gray-200, buttons had a
+     pointer cursor, and placeholders were gray-400. Kept so the upgrade changes nothing
+     visible. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: "Alexandria", sans-serif;
+  }
+
+  main,
+  nav {
+    max-width: 100vw;
+    margin: 0 auto;
+  }
+
+  main {
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-family: "Geologica", sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    text-transform: uppercase;
+    line-height: 1;
+    text-align: center;
+    color: var(--color-fg);
+  }
+}
+
+@utility h1-home {
+  font-size: clamp(2.5rem, 6vw, 5rem);
 }

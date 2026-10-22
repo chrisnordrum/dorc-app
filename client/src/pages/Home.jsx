@@ -8,7 +8,7 @@ export default function Home() {
   const { user, loggedIn } = useAuth();
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary/10 via-bg to-accent/20">
+    <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-primary/10 via-bg to-accent/20">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-400 dark:bg-indigo-600 opacity-30 rounded-full blur-3xl" />
       <div className="absolute top-40 -right-40 w-96 h-96 bg-purple-400 dark:bg-purple-600 opacity-30 rounded-full blur-3xl" />
 

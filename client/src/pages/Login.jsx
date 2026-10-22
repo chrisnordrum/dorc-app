@@ -104,7 +104,7 @@ export default function Login() {
                   onChange={(e) => setUsername(e.target.value)}
                   type="text"
                   placeholder="Username"
-                  className={`p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.username ? "border-red-500" : "border-border"
                   }`}
                 />
@@ -122,7 +122,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   placeholder="Password"
-                  className={`p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.password ? "border-red-500" : "border-border"
                   }`}
                 />
