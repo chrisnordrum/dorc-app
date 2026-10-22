@@ -38,7 +38,7 @@ export default function QuestGrid({ limit }) {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] gap-6">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
       {displayedQuests.map((quest) => (
         <QuestCard key={quest.id} quest={quest} />
       ))}

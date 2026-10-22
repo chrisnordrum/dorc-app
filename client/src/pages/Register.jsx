@@ -146,7 +146,7 @@ export default function Register() {
                     onChange={(e) => setFirstName(e.target.value)}
                     type="text"
                     placeholder="First Name"
-                    className={`p-3 rounded-full bg-bg border text-fg w-full outline-none focus:ring-2 focus:ring-accent/30 ${
+                    className={`p-3 rounded-full bg-bg border text-fg w-full outline-hidden focus:ring-2 focus:ring-accent/30 ${
                       errors.firstName ? "border-red-500" : "border-border"
                     }`}
                   />
@@ -164,7 +164,7 @@ export default function Register() {
                     onChange={(e) => setLastName(e.target.value)}
                     type="text"
                     placeholder="Last Name"
-                    className={`p-3 rounded-full bg-bg border text-fg w-full outline-none focus:ring-2 focus:ring-accent/30 ${
+                    className={`p-3 rounded-full bg-bg border text-fg w-full outline-hidden focus:ring-2 focus:ring-accent/30 ${
                       errors.lastName ? "border-red-500" : "border-border"
                     }`}
                   />
@@ -183,7 +183,7 @@ export default function Register() {
                   onChange={(e) => setUsername(e.target.value)}
                   type="text"
                   placeholder="Username"
-                  className={`p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.username ? "border-red-500" : "border-border"
                   }`}
                 />
@@ -201,7 +201,7 @@ export default function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   placeholder="Email"
-                  className={`p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.email ? "border-red-500" : "border-border"
                   }`}
                 />
@@ -219,7 +219,7 @@ export default function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   placeholder="Password"
-                  className={`p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.password ? "border-red-500" : "border-border"
                   }`}
                 />

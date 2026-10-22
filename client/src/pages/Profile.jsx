@@ -204,7 +204,7 @@ export default function Profile() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-primary/10 via-bg to-accent/20">
+    <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-primary/10 via-bg to-accent/20">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-400 dark:bg-indigo-600 opacity-30 rounded-full blur-3xl" />
       <div className="absolute top-40 -right-40 w-96 h-96 bg-purple-400 dark:bg-purple-600 opacity-30 rounded-full blur-3xl" />
 
@@ -333,7 +333,7 @@ export default function Profile() {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className={`w-full p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                    className={`w-full p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                       errors.firstName ? "border-red-500" : "border-border"
                     }`}
                   />
@@ -356,7 +356,7 @@ export default function Profile() {
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className={`w-full p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                    className={`w-full p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                       errors.lastName ? "border-red-500" : "border-border"
                     }`}
                   />
@@ -380,7 +380,7 @@ export default function Profile() {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(sanitizeUsername(e.target.value))}
-                  className={`w-full p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`w-full p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.username ? "border-red-500" : "border-border"
                   }`}
                 />
@@ -403,7 +403,7 @@ export default function Profile() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full p-3 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`w-full p-3 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                     errors.email ? "border-red-500" : "border-border"
                   }`}
                 />
@@ -427,7 +427,7 @@ export default function Profile() {
                   onChange={(e) => setBio(e.target.value)}
                   rows={4}
                   placeholder="Tell us a little about yourself"
-                  className={`w-full p-3 rounded-3xl bg-bg border text-fg outline-none resize-none focus:ring-2 focus:ring-primary/30 ${
+                  className={`w-full p-3 rounded-3xl bg-bg border text-fg outline-hidden resize-none focus:ring-2 focus:ring-primary/30 ${
                     errors.bio ? "border-red-500" : "border-border"
                   }`}
                 />
@@ -496,7 +496,7 @@ export default function Profile() {
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className={`w-full p-3 pr-12 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                    className={`w-full p-3 pr-12 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                       errors.newPassword ? "border-red-500" : "border-border"
                     }`}
                   />
@@ -535,7 +535,7 @@ export default function Profile() {
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className={`w-full p-3 pr-12 rounded-full bg-bg border text-fg outline-none focus:ring-2 focus:ring-primary/30 ${
+                    className={`w-full p-3 pr-12 rounded-full bg-bg border text-fg outline-hidden focus:ring-2 focus:ring-primary/30 ${
                       errors.confirmPassword
                         ? "border-red-500"
                         : "border-border"
